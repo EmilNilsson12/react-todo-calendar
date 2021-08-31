@@ -42,17 +42,14 @@ function CalenderView({ todos }) {
 		const numOfPlaceholderDays = momentObj.clone().startOf('month').format('e');
 		for (let i = 1; i <= numOfPlaceholderDays; i++) {
 			components.push(
-				<DayOfMonth
-					key={`PlaceHolder ${i} for displayed month`}
-					placeHolder={true}
-				/>
+				<DayOfMonth key={`null ${i} of month`} placeHolder={true} />
 			);
 		}
 
 		for (let i = 1; i <= daysInThisMonth; i++) {
 			components.push(
 				<DayOfMonth
-					key={`Day ${i} of displayed month`}
+					key={`Day ${i} of month`}
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
