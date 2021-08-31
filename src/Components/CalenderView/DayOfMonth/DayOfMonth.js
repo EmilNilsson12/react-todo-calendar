@@ -4,9 +4,11 @@ function DayOfMonth({ day, placeHolder, today }) {
 			{placeHolder ? (
 				<div className='placeholder grid-child'></div>
 			) : today ? (
-				<div className='today day-div grid-child'>Day {day}</div>
+				<button id='today' className='day-div grid-child'>
+					Day {day}
+				</button>
 			) : (
-				<div className='day-div grid-child'>Day {day}</div>
+				<button className='day-div grid-child'>Day {day}</button>
 			)}
 		</>
 	);

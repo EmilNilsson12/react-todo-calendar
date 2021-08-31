@@ -19,6 +19,8 @@
 
 .calender-days {
 	background-color: rgba(0, 0, 255, 0.3);
+	gap: 5px;
+	padding: 3px;
 }
 
 .day-div {
@@ -26,9 +28,11 @@
 	color: white;
 	padding: 5px 0;
 	padding-left: 25%;
+	user-select: none;
+	cursor: pointer;
 }
 
-.today {
+#today {
 	background-color: rgba(0, 0, 255, 0.5);
 	outline: 2px dashed white;
 }
