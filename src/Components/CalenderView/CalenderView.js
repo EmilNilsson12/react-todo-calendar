@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
+import DayOfMonth from './DayOfMonth/DayOfMonth';
+
+import './CalenderView.css';
+import WeekDays from './WeekDays/WeekDays';
+
 function CalenderView({ todos }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
 	const [currentViewMonth, setCurrentViewMonth] = useState();
@@ -32,12 +37,17 @@ function CalenderView({ todos }) {
 		const components = [];
 
 		for (let i = 1; i <= daysInThisMonth; i++) {
-			components.push(<span>__-day {i}--_</span>);
+			components.push(
+				<DayOfMonth
+					key={`${i}-${currentViewMonth}-${currentViewYear}`}
+					day={i}
+				/>
+			);
 		}
 		return components;
 	};
 	return (
-		<div>
+		<div className='month-view'>
 			View of current month{' '}
 			<i>
 				{currentViewMonth} - {currentViewYear}
@@ -45,7 +55,8 @@ function CalenderView({ todos }) {
 			<div>
 				{currentViewMonth} has {daysInThisMonth} days
 			</div>
-			<div>{renderDays()}</div>
+			<WeekDays />
+			<div className='grid-container'>{renderDays()}</div>
 			<button onClick={prevMonth}>Prev month</button>
 			<button onClick={nextMonth}>Next month</button>
 		</div>
