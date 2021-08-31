@@ -35,6 +35,14 @@ function CalenderView({ todos }) {
 		updateStates();
 	};
 
+	const showTasksForClickedDay = ({ target }) => {
+		console.log('Clicked', target);
+		console.log('Clicked day: ', target.querySelector('span').textContent);
+		const clickedDate = parseInt(target.querySelector('span').textContent, 10);
+		console.log('clickedDate: ', clickedDate);
+		console.log('typeof clickedDate: ', typeof clickedDate);
+	};
+
 	const renderDays = () => {
 		const components = [];
 
@@ -57,6 +65,7 @@ function CalenderView({ todos }) {
 					day={i}
 					// Today is only true when it's today
 					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
+					cbFunc={showTasksForClickedDay}
 				/>
 			);
 		}
