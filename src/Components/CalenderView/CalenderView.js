@@ -43,7 +43,7 @@ function CalenderView({ todos }) {
 		for (let i = 0; i < numOfPlaceholderDays; i++) {
 			components.push(
 				<DayOfMonth
-					key={`placeHolder-${i}-${currentViewMonth}-${currentViewYear}`}
+					key={`PlaceHolder ${i} for displayed month`}
 					placeHolder={true}
 				/>
 			);
@@ -52,7 +52,7 @@ function CalenderView({ todos }) {
 		for (let i = 1; i <= daysInThisMonth; i++) {
 			components.push(
 				<DayOfMonth
-					key={`${i}-${currentViewMonth}-${currentViewYear}`}
+					key={`Day ${i} of displayed month`}
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
