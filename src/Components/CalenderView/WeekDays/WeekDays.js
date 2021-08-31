@@ -12,7 +12,6 @@ function WeekDays() {
 				</div>
 			);
 		}
-		console.log('divs: ', divs);
 		return divs;
 	};
 	return <div className='grid-container week-days'>{renderDivs()}</div>;
