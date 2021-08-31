@@ -5,28 +5,24 @@ function CalenderView() {
 	const [currentViewMonth, setCurrentViewMonth] = useState();
 	const [currentViewYear, setCurrentViewYear] = useState();
 
-	useEffect(() => {
+	const updateStates = () => {
 		setCurrentViewMonth(momentObj.format('MMMM'));
 		setCurrentViewYear(momentObj.format('YYYY'));
+	};
+
+	useEffect(() => {
+		updateStates();
 	}, [momentObj]);
 
 	const prevMonth = () => {
-		console.log('Show prev month');
 		momentObj.subtract(1, 'M');
-		setCurrentViewMonth(momentObj.format('MMMM'));
-		setCurrentViewYear(momentObj.format('YYYY'));
+		updateStates();
 	};
 
 	const nextMonth = () => {
-		console.log('Show next month');
 		momentObj.add(1, 'M');
-		setCurrentViewMonth(momentObj.format('MMMM'));
-		setCurrentViewYear(momentObj.format('YYYY'));
+		updateStates();
 	};
-
-	useEffect(() => {
-		console.log('Calender now visible');
-	}, []);
 
 	return (
 		<div>
