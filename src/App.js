@@ -35,6 +35,7 @@ function App() {
 	};
 	return (
 		<div className='App'>
+      <SwapView cbFunc={callBacks.swapView} />
 			{showCalender ? (
 				<CalenderView />
 			) : fetchingTodos ? (
@@ -42,7 +43,6 @@ function App() {
 			) : (
 				<ListTodosView todos={todos} />
 			)}
-			<SwapView cbFunc={callBacks.swapView} />
 		</div>
 	);
 }
