@@ -1,9 +1,9 @@
-function DayWithTodos({ day, todos }) {
+function DayWithTodos({ dayToShow, todos }) {
 	// const todosForThisDay = todos.filter((todo) => todo.deadline === day);
 	return (
 		<div>
 			<h3>
-				Todos for day <u>{day.format('D [of] MMMM, YYYY')}</u>
+				Todos for day <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 			</h3>
 			<ul>
 				{/* {todosForThisDay.map((todoObj) => (

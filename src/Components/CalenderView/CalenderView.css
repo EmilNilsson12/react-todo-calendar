@@ -32,7 +32,7 @@
 	cursor: pointer;
 }
 
-#today {
+.today {
 	background-color: rgba(0, 0, 255, 0.5);
 	outline: 2px dashed white;
 }

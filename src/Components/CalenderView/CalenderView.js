@@ -10,11 +10,16 @@ function CalenderView({ todos }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
 	const [today, setToday] = useState(momentObj.clone());
 
+	const [currentViewDay, setCurrentViewDay] = useState();
 	const [currentViewMonth, setCurrentViewMonth] = useState();
 	const [currentViewYear, setCurrentViewYear] = useState();
+
 	const [daysInThisMonth, setDaysInThisMonth] = useState();
 
+	// console.log('currentDayInFocus: ', currentDayInFocus);
+
 	const updateStates = () => {
+		setCurrentViewDay(parseInt(momentObj.format('D'), 10));
 		setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
 		setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
 		setDaysInThisMonth(momentObj.daysInMonth());
@@ -23,6 +28,7 @@ function CalenderView({ todos }) {
 	// Only fired once since momentObj is only ever mutated, never re-assigned
 	// Basically componentDidMount
 	useEffect(() => {
+		// console.log('Momentobj successfully updated');
 		updateStates();
 	}, [momentObj]);
 
@@ -36,12 +42,10 @@ function CalenderView({ todos }) {
 		updateStates();
 	};
 
-	const showTasksForClickedDay = ({ target }) => {
-		console.log('Clicked', target);
-		console.log('Clicked day: ', target.querySelector('span').textContent);
-		const clickedDate = parseInt(target.querySelector('span').textContent, 10);
-		console.log('clickedDate: ', clickedDate);
-		console.log('typeof clickedDate: ', typeof clickedDate);
+	const dateClicked = ({ target }) => {
+		const clickedDate = parseInt(target.id.split('|')[0]);
+		setCurrentViewDay(clickedDate);
+		momentObj.date(clickedDate);
 	};
 
 	const renderDays = () => {
@@ -66,7 +70,7 @@ function CalenderView({ todos }) {
 					day={i}
 					// Today is only true when it's today
 					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
-					cbFunc={showTasksForClickedDay}
+					cbFunc={dateClicked}
 				/>
 			);
 		}
@@ -88,7 +92,7 @@ function CalenderView({ todos }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos day={today} />
+			<DayWithTodos dayToShow={momentObj} />
 		</>
 	);
 }
