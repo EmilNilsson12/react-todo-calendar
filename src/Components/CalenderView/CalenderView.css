@@ -32,7 +32,10 @@
 	cursor: pointer;
 }
 
-#today {
-	background-color: rgba(0, 0, 255, 0.5);
+.today {
+	background-color: rgb(0, 0, 255);
+}
+
+.active-day {
 	outline: 2px dashed white;
 }
