@@ -82,9 +82,6 @@ function CalenderView({ todos }) {
 						{momentObj.format('MMMM')} - {momentObj.format('YYYY')}
 					</i>
 				</h2>
-				<div>
-					{momentObj.format('MMMM')} has {daysInThisMonth} days
-				</div>
 				<button onClick={prevMonth}>Prev month</button>
 				<button onClick={nextMonth}>Next month</button>
 				<WeekDays />
