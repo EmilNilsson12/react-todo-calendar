@@ -19,7 +19,7 @@ function CalenderView({ todos }) {
 	// console.log('currentDayInFocus: ', currentDayInFocus);
 
 	const updateStates = () => {
-		setCurrentViewDay(parseInt(momentObj.format('D'), 10));
+		setCurrentViewDay(parseInt(momentObj.startOf('month').format('D'), 10));
 		setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
 		setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
 		setDaysInThisMonth(momentObj.daysInMonth());
