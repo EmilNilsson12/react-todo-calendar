@@ -35,9 +35,9 @@ function App() {
 	};
 	return (
 		<div className='App'>
-      <SwapView cbFunc={callBacks.swapView} />
+			<SwapView cbFunc={callBacks.swapView} />
 			{showCalender ? (
-				<CalenderView />
+				<CalenderView todos={todos} />
 			) : fetchingTodos ? (
 				<div>Loading...</div>
 			) : (

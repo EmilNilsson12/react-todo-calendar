@@ -1,25 +1,36 @@
 function DayWithTodos({ dayToShow, todos }) {
-	// const todosForThisDay = todos.filter((todo) => todo.deadline === day);
+	console.log('todos: ', todos);
+	console.log('dayToShow: ', dayToShow);
+	const todosForThisDay = todos.filter((todo) =>
+		dayToShow.isSame(todo.deadline, 'date')
+	);
+	console.log('todosForThisDay: ', todosForThisDay);
+	console.log(
+		todosForThisDay.length > 0
+			? todosForThisDay
+			: 'no todos have dealine on this day'
+	);
+
 	return (
 		<div>
 			<h3>
 				Todos for day <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 			</h3>
-			<ul>
-				{/* {todosForThisDay.map((todoObj) => (
-					<li>
-						<div>
-							<h4>{todoObj?.title}</h4>
-							<p>{todoObj?.description}</p>
-							<span>{todoObj?.dateAdded}</span>
-						</div>
-					</li>
-				))} */}
-				<li>Todo...</li>
-				<li>Todo...</li>
-				<li>Todo...</li>
-				<li>Todo...</li>
-			</ul>
+			{todosForThisDay.length > 0 ? (
+				<ul>
+					{todosForThisDay.map((todoObj) => (
+						<li>
+							<div>
+								<h4>{todoObj?.title}</h4>
+								<p>{todoObj?.description}</p>
+								<span>{todoObj?.dateAdded}</span>
+							</div>
+						</li>
+					))}
+				</ul>
+			) : (
+				<i>No todos for this day...</i>
+			)}
 		</div>
 	);
 }
