@@ -90,7 +90,7 @@ function CalenderView({ todos }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos dayToShow={momentObj} />
+			<DayWithTodos dayToShow={momentObj} todos={todos} />
 		</>
 	);
 }
