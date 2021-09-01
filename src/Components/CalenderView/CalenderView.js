@@ -67,6 +67,7 @@ function CalenderView({ todos }) {
 					day={i}
 					// Today is only true when it's today
 					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
+					active={itIsActive(currentViewDay, i)}
 					cbFunc={dateClicked}
 				/>
 			);
@@ -95,6 +96,10 @@ function CalenderView({ todos }) {
 }
 
 export default CalenderView;
+
+function itIsActive(currentViewDay, activeDayAsInt) {
+	return activeDayAsInt === currentViewDay;
+}
 
 function itIsToday(
 	momentObjToday,
