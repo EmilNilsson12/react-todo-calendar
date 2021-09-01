@@ -14,8 +14,8 @@ function App() {
 	};
 	return (
 		<>
-			{showCalender ? <CalenderView /> : <ListTodosView />}
 			<SwapView cbFunc={callBacks.swapView} />
+			{showCalender ? <CalenderView /> : <ListTodosView />}
 		</>
 	);
 }

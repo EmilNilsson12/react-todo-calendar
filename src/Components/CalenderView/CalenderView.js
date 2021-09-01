@@ -4,6 +4,7 @@ import DayOfMonth from './DayOfMonth/DayOfMonth';
 
 import './CalenderView.css';
 import WeekDays from './WeekDays/WeekDays';
+import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
 function CalenderView({ todos }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
@@ -72,20 +73,23 @@ function CalenderView({ todos }) {
 		return components;
 	};
 	return (
-		<div className='month-view'>
-			<h2>
-				<i>
-					{momentObj.format('MMMM')} - {momentObj.format('YYYY')}
-				</i>
-			</h2>
-			<div>
-				{momentObj.format('MMMM')} has {daysInThisMonth} days
+		<>
+			<div className='month-view'>
+				<h2>
+					<i>
+						{momentObj.format('MMMM')} - {momentObj.format('YYYY')}
+					</i>
+				</h2>
+				<div>
+					{momentObj.format('MMMM')} has {daysInThisMonth} days
+				</div>
+				<button onClick={prevMonth}>Prev month</button>
+				<button onClick={nextMonth}>Next month</button>
+				<WeekDays />
+				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<button onClick={prevMonth}>Prev month</button>
-			<button onClick={nextMonth}>Next month</button>
-			<WeekDays />
-			<div className='grid-container calender-days'>{renderDays()}</div>
-		</div>
+			<DayWithTodos day={today} />
+		</>
 	);
 }
 
