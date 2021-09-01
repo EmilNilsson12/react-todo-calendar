@@ -19,11 +19,11 @@ function DayWithTodos({ dayToShow, todos }) {
 			{todosForThisDay.length > 0 ? (
 				<ul>
 					{todosForThisDay.map((todoObj) => (
-						<li>
+						<li key={todoObj.id}>
 							<div>
-								<h4>{todoObj?.title}</h4>
-								<p>{todoObj?.description}</p>
-								<span>{todoObj?.dateAdded}</span>
+								<h4>{todoObj.title}</h4>
+								<p>{todoObj.description}</p>
+								<span>{todoObj.dateAdded}</span>
 							</div>
 						</li>
 					))}
