@@ -53,19 +53,16 @@ function CalenderView({ todos }) {
 
 		// Get weekday of first of month as int to create "shadow-days" when a month doesnt start on a sunday
 		const numOfPlaceholderDays = momentObj.clone().startOf('month').format('e');
-		for (let i = 0; i < numOfPlaceholderDays; i++) {
+		for (let i = 1; i <= numOfPlaceholderDays; i++) {
 			components.push(
-				<DayOfMonth
-					key={`placeHolder-${i}-${currentViewMonth}-${currentViewYear}`}
-					placeHolder={true}
-				/>
+				<DayOfMonth key={`null ${i} of month`} placeHolder={true} />
 			);
 		}
 
 		for (let i = 1; i <= daysInThisMonth; i++) {
 			components.push(
 				<DayOfMonth
-					key={`${i}-${currentViewMonth}-${currentViewYear}`}
+					key={`Day ${i} of month`}
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
