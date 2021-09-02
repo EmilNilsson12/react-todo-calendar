@@ -6,7 +6,7 @@ import './CalenderView.css';
 import WeekDays from './WeekDays/WeekDays';
 import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
-function CalenderView({ todos }) {
+function CalenderView({ todos, crudOperations }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
 	const [today, setToday] = useState(momentObj.clone());
 
@@ -99,7 +99,11 @@ function CalenderView({ todos }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos dayToShow={momentObj} todos={todos} />
+			<DayWithTodos
+				dayToShow={momentObj}
+				todos={todos}
+				crudOperations={crudOperations}
+			/>
 		</>
 	);
 }

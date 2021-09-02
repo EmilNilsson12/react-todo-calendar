@@ -1,6 +1,6 @@
 import TodoForm from '../TodoForm/TodoForm';
 
-function DayWithTodos({ dayToShow, todos }) {
+function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	console.log('todos: ', todos);
 	console.log('dayToShow: ', dayToShow);
 	const todosForThisDay = todos.filter((todo) =>
@@ -31,14 +31,13 @@ function DayWithTodos({ dayToShow, todos }) {
 							</li>
 						))}
 					</ul>
-					<TodoForm defaultDate={dayToShow} />
 				</>
 			) : (
 				<>
 					<i>No todos due this day...</i>
-					<TodoForm defaultDate={dayToShow} />
 				</>
 			)}
+			<TodoForm defaultDate={dayToShow} addTodo={crudOperations.addTodo} />
 		</div>
 	);
 }

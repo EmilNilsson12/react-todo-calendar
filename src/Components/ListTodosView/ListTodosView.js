@@ -3,11 +3,11 @@ import './ListTodosView.css';
 
 import TodoForm from '../TodoForm/TodoForm';
 
-function ListTodosView({ todos }) {
+function ListTodosView({ todos, crudOperations }) {
 	const sortedByDueDate = [...todos.sort(compareByDates)];
 	return (
 		<>
-			<TodoForm defaultDate={moment()} />
+			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
 			<div className='all-todos-listed'>
 				{sortedByDueDate.map((todo) => {
 					const momentObjFromTodo = moment(todo.deadline);
