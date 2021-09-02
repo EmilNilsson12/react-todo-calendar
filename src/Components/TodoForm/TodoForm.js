@@ -1,14 +1,16 @@
 import moment from 'moment';
 import { useState } from 'react';
+
 import './TodoForm.css';
+
 function TodoForm({ defaultDate, addTodo }) {
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		console.log('Success');
 		addTodo({
-			inputTitle,
-			inputDescription,
-			inputDate,
+			title: inputTitle,
+			description: inputDescription,
+			deadline: inputDate.toISOString(),
 		});
 		setInputTitle('');
 		setInputDescription('');

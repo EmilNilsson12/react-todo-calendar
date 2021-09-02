@@ -5,6 +5,11 @@ import ListTodosView from './Components/ListTodosView/ListTodosView';
 import SwapView from './Components/SwapView/SwapView';
 import GetAllTodos from './FetchRequests/GetAllTodos';
 
+// import {
+// 	updateListOfTasks_DB,
+// 	getListOfTasks_DB,
+// } from './CrudFunctions/CrudFunctions.js';
+
 function App() {
 	const [showCalender, toggleShowCalender] = useState(false);
 
@@ -18,11 +23,10 @@ function App() {
 	}, [todos]);
 
 	const crudOperations = {
-		addTodo: ({ inputTitle, inputDescription, inputDate }) => {
-			console.log('Add todo');
-			console.log('Add inputTitle: ', inputTitle);
-			console.log('Add inputDescription: ', inputDescription);
-			console.log('Add inputDate: ', inputDate);
+		addTodo: (todoObj) => {
+			const copyOfTodos = [...todos];
+			copyOfTodos.push(todoObj);
+			setTodos(copyOfTodos);
 		},
 		deleteTodo: () => console.log('Delete todo'),
 		updateTodo: () => console.log('Update todo'),
