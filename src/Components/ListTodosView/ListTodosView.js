@@ -1,21 +1,26 @@
 import moment from 'moment';
 import './ListTodosView.css';
 
+import TodoForm from '../TodoForm/TodoForm';
+
 function ListTodosView({ todos }) {
 	const sortedByDueDate = [...todos.sort(compareByDates)];
 	return (
-		<div className='all-todos-listed'>
-			{sortedByDueDate.map((todo) => {
-				const momentObjFromTodo = moment(todo.deadline);
-				return (
-					<div key={todo.id}>
-						<h3>{todo.title}</h3>
-						<p>{todo.description}</p>
-						<div>Due: {momentObjFromTodo.fromNow()}</div>
-					</div>
-				);
-			})}
-		</div>
+		<>
+			<TodoForm defaultDate={moment()} />
+			<div className='all-todos-listed'>
+				{sortedByDueDate.map((todo) => {
+					const momentObjFromTodo = moment(todo.deadline);
+					return (
+						<div key={todo.id}>
+							<h3>{todo.title}</h3>
+							<p>{todo.description}</p>
+							<div>Due: {momentObjFromTodo.fromNow()}</div>
+						</div>
+					);
+				})}
+			</div>
+		</>
 	);
 }
 
