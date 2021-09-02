@@ -30,16 +30,13 @@ function TodoForm({ defaultDate }) {
 					<input type='text' />
 				</label>
 				<label>
-					Deadline
+					Deadline: <b>{moment(inputDate).add('h', 8).fromNow()}</b>
 					<input
 						type='date'
 						value={inputDate.toISOString().split('T')[0]}
 						onChange={handleDateChange}
 						required
 					/>
-					<p>
-						Dealine: <b>{moment(inputDate).add('h', 8).fromNow()}</b>
-					</p>
 				</label>
 				<input type='submit' value='Add new Todo' />
 			</form>
