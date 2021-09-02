@@ -19,7 +19,7 @@ function CalenderView({ todos }) {
 	// console.log('currentDayInFocus: ', currentDayInFocus);
 
 	const updateStates = () => {
-		setCurrentViewDay(parseInt(momentObj.startOf('month').format('D'), 10));
+		setCurrentViewDay(parseInt(momentObj.format('D'), 10));
 		setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
 		setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
 		setDaysInThisMonth(momentObj.daysInMonth());
@@ -69,6 +69,12 @@ function CalenderView({ todos }) {
 					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
 					active={itIsActive(currentViewDay, i)}
 					cbFunc={dateClicked}
+					hasTodos={checkIfDayHasTodos(
+						currentViewMonth,
+						currentViewYear,
+						i,
+						todos
+					)}
 				/>
 			);
 		}
@@ -94,6 +100,32 @@ function CalenderView({ todos }) {
 
 export default CalenderView;
 
+function checkIfDayHasTodos(
+	currentViewMonth,
+	currentViewYear,
+	currentIterationDay,
+	todos
+) {
+	const formattedParam = formatDate(
+		currentViewYear,
+		currentViewMonth,
+		currentIterationDay
+	);
+	console.log('formattedParam: ', formattedParam);
+	const compareDate = moment(formattedParam).format('YYYY-MM-DD');
+	console.log('compareDate: ', compareDate);
+
+	let numOfDeadlinesOnThisDate = 0;
+	todos.forEach((todo) => {
+		const thisDayHasDeadlines = todo.deadline.split('T')[0] === compareDate;
+		if (thisDayHasDeadlines) {
+			numOfDeadlinesOnThisDate++;
+		}
+	});
+
+	return numOfDeadlinesOnThisDate;
+}
+
 function itIsActive(currentViewDay, activeDayAsInt) {
 	return activeDayAsInt === currentViewDay;
 }
@@ -114,4 +146,20 @@ function itIsToday(
 	const correctDay = todayDateAsInt === todayAsInt;
 
 	return correctMonth && correctYear && correctDay;
+}
+
+function formatDate(year, month, day) {
+	// If month.toString.length = 1
+	// add leading 0
+	let monthAsString = month.toString();
+	if (monthAsString.length === 1) monthAsString = '0' + monthAsString;
+
+	// If day.toString.length = 1
+	// add leading 0
+	console.log('day: ', day);
+	let dayAsString = day.toString();
+	if (dayAsString.length === 1) dayAsString = '0' + dayAsString;
+
+	const formatted = `${year}-${monthAsString}-${dayAsString}`;
+	return formatted;
 }
