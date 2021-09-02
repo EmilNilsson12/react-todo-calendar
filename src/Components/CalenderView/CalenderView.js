@@ -28,9 +28,8 @@ function CalenderView({ todos }) {
 	// Only fired once since momentObj is only ever mutated, never re-assigned
 	// Basically componentDidMount
 	useEffect(() => {
-		// console.log('Momentobj successfully updated');
 		updateStates();
-	}, [momentObj]);
+	}, []);
 
 	const prevMonth = () => {
 		momentObj.subtract(1, 'M');
@@ -43,7 +42,14 @@ function CalenderView({ todos }) {
 	};
 
 	const dateClicked = ({ target }) => {
-		const clickedDate = parseInt(target.id.split('|')[0]);
+		let clickedDate;
+		if (target.textContent === '|') {
+			clickedDate = parseInt(target.parentNode.parentNode.id.split('|')[0]);
+		} else if (target.id === '') {
+			clickedDate = parseInt(target.parentNode.id.split('|')[0]);
+		} else {
+			clickedDate = parseInt(target.id.split('|')[0]);
+		}
 		setCurrentViewDay(clickedDate);
 		momentObj.date(clickedDate);
 	};
@@ -111,9 +117,7 @@ function checkIfDayHasTodos(
 		currentViewMonth,
 		currentIterationDay
 	);
-	console.log('formattedParam: ', formattedParam);
 	const compareDate = moment(formattedParam).format('YYYY-MM-DD');
-	console.log('compareDate: ', compareDate);
 
 	let numOfDeadlinesOnThisDate = 0;
 	todos.forEach((todo) => {
@@ -156,7 +160,6 @@ function formatDate(year, month, day) {
 
 	// If day.toString.length = 1
 	// add leading 0
-	console.log('day: ', day);
 	let dayAsString = day.toString();
 	if (dayAsString.length === 1) dayAsString = '0' + dayAsString;
 
