@@ -19,17 +19,20 @@ function DayWithTodos({ dayToShow, todos }) {
 				Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 			</h3>
 			{todosForThisDay.length > 0 ? (
-				<ul>
-					{todosForThisDay.map((todoObj) => (
-						<li key={todoObj.id}>
-							<div>
-								<h4>{todoObj.title}</h4>
-								<p>{todoObj.description}</p>
-								<span>{todoObj.dateAdded}</span>
-							</div>
-						</li>
-					))}
-				</ul>
+				<>
+					<ul>
+						{todosForThisDay.map((todoObj) => (
+							<li key={todoObj.id}>
+								<div>
+									<h4>{todoObj.title}</h4>
+									<p>{todoObj.description}</p>
+									<span>{todoObj.dateAdded}</span>
+								</div>
+							</li>
+						))}
+					</ul>
+					<TodoForm defaultDate={dayToShow} />
+				</>
 			) : (
 				<>
 					<i>No todos due this day...</i>

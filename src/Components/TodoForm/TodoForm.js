@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useState } from 'react';
 import './TodoForm.css';
 function TodoForm({ defaultDate }) {
@@ -6,11 +7,14 @@ function TodoForm({ defaultDate }) {
 		console.log('Success');
 	};
 
-	const [inputDate, setInputDate] = useState(defaultDate.format('YYYY-MM-DD'));
+	const [inputDate, setInputDate] = useState(defaultDate);
 
 	const handleDateChange = (evt) => {
-		console.log('Date changed to: ', evt.target.value);
-		setInputDate(evt.target.value);
+		let dateComponent = evt.target.value;
+		let timeComponent = defaultDate.toISOString().split('T')[1];
+		let newDate = moment(dateComponent + 'T' + timeComponent);
+
+		setInputDate(newDate);
 	};
 	return (
 		<>
@@ -29,10 +33,13 @@ function TodoForm({ defaultDate }) {
 					Deadline
 					<input
 						type='date'
-						value={inputDate}
+						value={inputDate.toISOString().split('T')[0]}
 						onChange={handleDateChange}
 						required
 					/>
+					<p>
+						Dealine: <b>{moment(inputDate).add('h', 8).fromNow()}</b>
+					</p>
 				</label>
 				<input type='submit' value='Add new Todo' />
 			</form>
