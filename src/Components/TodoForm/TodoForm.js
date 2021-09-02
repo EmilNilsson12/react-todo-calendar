@@ -34,7 +34,7 @@ function TodoForm({ defaultDate }) {
 						required
 					/>
 				</label>
-				<input type='submit' />
+				<input type='submit' value='Add new Todo' />
 			</form>
 		</>
 	);
