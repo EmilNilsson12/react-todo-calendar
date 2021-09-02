@@ -1,3 +1,5 @@
+import TodoForm from '../TodoForm/TodoForm';
+
 function DayWithTodos({ dayToShow, todos }) {
 	console.log('todos: ', todos);
 	console.log('dayToShow: ', dayToShow);
@@ -14,7 +16,7 @@ function DayWithTodos({ dayToShow, todos }) {
 	return (
 		<div>
 			<h3>
-				Todos for day <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
+				Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 			</h3>
 			{todosForThisDay.length > 0 ? (
 				<ul>
@@ -29,7 +31,10 @@ function DayWithTodos({ dayToShow, todos }) {
 					))}
 				</ul>
 			) : (
-				<i>No todos for this day...</i>
+				<>
+					<i>No todos due this day...</i>
+					<TodoForm defaultDate={dayToShow} />
+				</>
 			)}
 		</div>
 	);
