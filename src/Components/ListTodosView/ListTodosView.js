@@ -1,21 +1,48 @@
+import { useState } from 'react';
 import moment from 'moment';
+
 import './ListTodosView.css';
 
-function ListTodosView({ todos }) {
+import TodoForm from '../TodoForm/TodoForm';
+import TodoView from '../TodoView/TodoView';
+
+function ListTodosView({ todos, crudOperations }) {
+	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
+	const [updateParams, setUpdateParams] = useState({});
+
+	const handleTodoUpdate = (todoObj) => {
+		setCurrentlyUpdating(true);
+		setUpdateParams(todoObj);
+	};
+
 	const sortedByDueDate = [...todos.sort(compareByDates)];
-	return (
-		<div className='all-todos-listed'>
-			{sortedByDueDate.map((todo) => {
-				const momentObjFromTodo = moment(todo.deadline);
-				return (
-					<div key={todo.id}>
-						<h3>{todo.title}</h3>
-						<p>{todo.description}</p>
-						<div>Due: {momentObjFromTodo.fromNow()}</div>
-					</div>
-				);
-			})}
-		</div>
+	return currentlyUpdating ? (
+		<TodoForm
+			addTodo={crudOperations.addTodo}
+			updateTodo={crudOperations.updateTodo}
+			defaultDate={moment(updateParams.deadline)}
+			updateParams={updateParams}
+			updateMode={true}
+			setCurrentlyUpdating={setCurrentlyUpdating}
+		/>
+	) : (
+		<>
+			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
+			<div className='all-todos-listed'>
+				{sortedByDueDate.map((todo, i) => {
+					const momentObjFromTodo = moment(todo.deadline);
+					return (
+						<TodoView
+							crudOperations={crudOperations}
+							key={i}
+							todoObj={todo}
+							momentObjFromTodo={momentObjFromTodo}
+							handleTodoUpdate={handleTodoUpdate}
+						/>
+					);
+				})}
+			</div>
+		</>
 	);
 }
 

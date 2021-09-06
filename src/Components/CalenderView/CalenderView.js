@@ -6,7 +6,7 @@ import './CalenderView.css';
 import WeekDays from './WeekDays/WeekDays';
 import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
-function CalenderView({ todos }) {
+function CalenderView({ todos, crudOperations }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
 	const [today, setToday] = useState(momentObj.clone());
 
@@ -19,7 +19,7 @@ function CalenderView({ todos }) {
 	// console.log('currentDayInFocus: ', currentDayInFocus);
 
 	const updateStates = () => {
-		setCurrentViewDay(parseInt(momentObj.startOf('month').format('D'), 10));
+		setCurrentViewDay(parseInt(momentObj.format('D'), 10));
 		setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
 		setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
 		setDaysInThisMonth(momentObj.daysInMonth());
@@ -28,9 +28,8 @@ function CalenderView({ todos }) {
 	// Only fired once since momentObj is only ever mutated, never re-assigned
 	// Basically componentDidMount
 	useEffect(() => {
-		// console.log('Momentobj successfully updated');
 		updateStates();
-	}, [momentObj]);
+	}, []);
 
 	const prevMonth = () => {
 		momentObj.subtract(1, 'M');
@@ -43,7 +42,14 @@ function CalenderView({ todos }) {
 	};
 
 	const dateClicked = ({ target }) => {
-		const clickedDate = parseInt(target.id.split('|')[0]);
+		let clickedDate;
+		if (target.textContent === '|') {
+			clickedDate = parseInt(target.parentNode.parentNode.id.split('|')[0]);
+		} else if (target.id === '') {
+			clickedDate = parseInt(target.parentNode.id.split('|')[0]);
+		} else {
+			clickedDate = parseInt(target.id.split('|')[0]);
+		}
 		setCurrentViewDay(clickedDate);
 		momentObj.date(clickedDate);
 	};
@@ -69,6 +75,12 @@ function CalenderView({ todos }) {
 					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
 					active={itIsActive(currentViewDay, i)}
 					cbFunc={dateClicked}
+					hasTodos={checkIfDayHasTodos(
+						currentViewMonth,
+						currentViewYear,
+						i,
+						todos
+					)}
 				/>
 			);
 		}
@@ -87,12 +99,40 @@ function CalenderView({ todos }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos dayToShow={momentObj} todos={todos} />
+			<DayWithTodos
+				dayToShow={momentObj}
+				todos={todos}
+				crudOperations={crudOperations}
+			/>
 		</>
 	);
 }
 
 export default CalenderView;
+
+function checkIfDayHasTodos(
+	currentViewMonth,
+	currentViewYear,
+	currentIterationDay,
+	todos
+) {
+	const formattedParam = formatDate(
+		currentViewYear,
+		currentViewMonth,
+		currentIterationDay
+	);
+	const compareDate = moment(formattedParam).format('YYYY-MM-DD');
+
+	let numOfDeadlinesOnThisDate = 0;
+	todos.forEach((todo) => {
+		const thisDayHasDeadlines = todo.deadline.split('T')[0] === compareDate;
+		if (thisDayHasDeadlines) {
+			numOfDeadlinesOnThisDate++;
+		}
+	});
+
+	return numOfDeadlinesOnThisDate;
+}
 
 function itIsActive(currentViewDay, activeDayAsInt) {
 	return activeDayAsInt === currentViewDay;
@@ -114,4 +154,19 @@ function itIsToday(
 	const correctDay = todayDateAsInt === todayAsInt;
 
 	return correctMonth && correctYear && correctDay;
+}
+
+function formatDate(year, month, day) {
+	// If month.toString.length = 1
+	// add leading 0
+	let monthAsString = month.toString();
+	if (monthAsString.length === 1) monthAsString = '0' + monthAsString;
+
+	// If day.toString.length = 1
+	// add leading 0
+	let dayAsString = day.toString();
+	if (dayAsString.length === 1) dayAsString = '0' + dayAsString;
+
+	const formatted = `${year}-${monthAsString}-${dayAsString}`;
+	return formatted;
 }
