@@ -18,18 +18,14 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	};
 
 	return currentlyUpdating ? (
-		<>
-			<div>
-				<TodoForm
-					addTodo={crudOperations.addTodo}
-					updateTodo={crudOperations.updateTodo}
-					defaultDate={moment(updateParams.deadline)}
-					updateParams={updateParams}
-					updateMode={true}
-					setCurrentlyUpdating={setCurrentlyUpdating}
-				/>
-			</div>
-		</>
+		<TodoForm
+			addTodo={crudOperations.addTodo}
+			updateTodo={crudOperations.updateTodo}
+			defaultDate={moment(updateParams.deadline)}
+			updateParams={updateParams}
+			updateMode={true}
+			setCurrentlyUpdating={setCurrentlyUpdating}
+		/>
 	) : (
 		<div>
 			<h3>
@@ -39,6 +35,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 				<div>
 					{todosForThisDay.map((todoObj) => (
 						<TodoView
+							key={todoObj.id}
 							todoObj={todoObj}
 							crudOperations={crudOperations}
 							handleTodoUpdate={handleTodoUpdate}
