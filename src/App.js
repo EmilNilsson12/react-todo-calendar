@@ -3,17 +3,10 @@ import './App.css';
 import CalenderView from './Components/CalenderView/CalenderView';
 import ListTodosView from './Components/ListTodosView/ListTodosView';
 import SwapView from './Components/SwapView/SwapView';
-import GetAllTodos from './FetchRequests/GetAllTodos';
-
-// import {
-// 	updateListOfTasks_DB,
-// 	getListOfTasks_DB,
-// } from './CrudFunctions/CrudFunctions.js';
 
 function App() {
 	const [showCalender, toggleShowCalender] = useState(false);
 
-	// const [fetchingTodos, setFetchingTodos] = useState(true);
 	const [todos, setTodos] = useState(
 		JSON.parse(localStorage.getItem('todos')) || []
 	);
@@ -59,23 +52,6 @@ function App() {
 			setTodos(copyOfTodos);
 		},
 	};
-
-	// const fetchAndSaveTodos = () => {
-	// 	console.log('fetchAndSaveTodos is called!');
-	// 	setTodos(
-	// 		GetAllTodos((e) => {
-	// 			console.log('todos parsed: ', e);
-	// 			setTodos(e);
-	// 			setFetchingTodos(false);
-	// 		})
-	// 	);
-	// };
-
-	// // componentDidMount
-	// useEffect(() => {
-	// 	console.log('App "componentDidMount"');
-	// 	fetchAndSaveTodos();
-	// }, []);
 
 	const callBacks = {
 		swapView: () => {
