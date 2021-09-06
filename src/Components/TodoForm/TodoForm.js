@@ -4,22 +4,39 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
-function TodoForm({ defaultDate, addTodo }) {
+function TodoForm({
+	defaultDate,
+	addTodo,
+	updateMode,
+	updateTodo,
+	updateParams,
+}) {
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		console.log('Success');
-		addTodo({
-			title: inputTitle,
-			description: inputDescription,
-			deadline: inputDate.toISOString(),
-			id: uuidv4(),
-		});
+
+		updateMode
+			? updateTodo({
+					title: inputTitle,
+					description: inputDescription,
+					deadline: inputDate.toISOString(),
+					id: updateParams.id,
+			  })
+			: addTodo({
+					title: inputTitle,
+					description: inputDescription,
+					deadline: inputDate.toISOString(),
+					id: uuidv4(),
+			  });
+
 		setInputTitle('');
 		setInputDescription('');
 	};
 
-	const [inputTitle, setInputTitle] = useState('');
-	const [inputDescription, setInputDescription] = useState('');
+	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
+	const [inputDescription, setInputDescription] = useState(
+		updateParams?.description || ''
+	);
 	const [inputDate, setInputDate] = useState(defaultDate);
 
 	const handleTitleChange = ({ target }) => {
@@ -37,40 +54,50 @@ function TodoForm({ defaultDate, addTodo }) {
 
 		setInputDate(newDate);
 	};
+	const cancelUpdate = () => {
+		console.log('Update of todo canceled');
+	};
 	return (
-		<>
-			<h3>Add a new todo using the form below!</h3>
-
-			<form onSubmit={handleSubmit}>
-				<label>
-					Title
-					<input
-						type='text'
-						value={inputTitle}
-						onChange={handleTitleChange}
-						required
-					/>
-				</label>
-				<label>
-					Additional info
-					<input
-						type='text'
-						value={inputDescription}
-						onChange={handleDescriptionChange}
-					/>
-				</label>
-				<label>
-					Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
-					<input
-						type='date'
-						value={inputDate.toISOString().split('T')[0]}
-						onChange={handleDateChange}
-						required
-					/>
-				</label>
-				<input type='submit' value='Add new Todo' />
-			</form>
-		</>
+		<form onSubmit={handleSubmit}>
+			<label>
+				Title
+				<input
+					type='text'
+					value={inputTitle}
+					onChange={handleTitleChange}
+					required
+				/>
+			</label>
+			<label>
+				Additional info
+				<input
+					type='text'
+					value={inputDescription}
+					onChange={handleDescriptionChange}
+				/>
+			</label>
+			<label>
+				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
+				<input
+					type='date'
+					value={inputDate.toISOString().split('T')[0]}
+					onChange={handleDateChange}
+					required
+				/>
+			</label>
+			<div className='submit-btn-div'>
+				<button type='submit'>
+					{updateMode ? 'Update todo' : 'Add new Todo'}
+				</button>
+				{updateMode ? (
+					<button type='button' onClick={cancelUpdate}>
+						Cancel
+					</button>
+				) : (
+					<></>
+				)}
+			</div>
+		</form>
 	);
 }
 
