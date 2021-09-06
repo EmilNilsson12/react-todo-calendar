@@ -1,5 +1,6 @@
-import moment from 'moment';
 import { useState } from 'react';
+import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
@@ -11,6 +12,7 @@ function TodoForm({ defaultDate, addTodo }) {
 			title: inputTitle,
 			description: inputDescription,
 			deadline: inputDate.toISOString(),
+			id: uuidv4(),
 		});
 		setInputTitle('');
 		setInputDescription('');
