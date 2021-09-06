@@ -12,6 +12,12 @@ function TodoForm({
 	updateParams,
 	hideForm,
 }) {
+	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
+	const [inputDesc, setInputDesc] = useState(updateParams?.description || '');
+	const [inputDate, setInputDate] = useState(defaultDate);
+
+	const firstFocusInputElement = useRef(null);
+
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		console.log('Success');
@@ -23,40 +29,32 @@ function TodoForm({
 			// Send new updateObj to App.js
 			updateTodo({
 				title: inputTitle,
-				description: inputDescription,
+				description: inputDesc,
 				deadline: inputDate.toISOString(),
 				id: updateParams.id,
 			});
 		} else {
 			addTodo({
 				title: inputTitle,
-				description: inputDescription,
+				description: inputDesc,
 				deadline: inputDate.toISOString(),
 				id: uuidv4(),
 			});
 		}
 
 		setInputTitle('');
-		setInputDescription('');
+		setInputDesc('');
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
 	};
-
-	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
-	const [inputDescription, setInputDescription] = useState(
-		updateParams?.description || ''
-	);
-	const [inputDate, setInputDate] = useState(defaultDate);
-
-	const firstFocusInputElement = useRef(null);
 
 	const handleTitleChange = ({ target }) => {
 		setInputTitle(target.value);
 	};
 
 	const handleDescriptionChange = ({ target }) => {
-		setInputDescription(target.value);
+		setInputDesc(target.value);
 	};
 
 	const handleDateChange = ({ target }) => {
@@ -87,7 +85,7 @@ function TodoForm({
 				Additional info
 				<input
 					type='text'
-					value={inputDescription}
+					value={inputDesc}
 					onChange={handleDescriptionChange}
 				/>
 			</label>
