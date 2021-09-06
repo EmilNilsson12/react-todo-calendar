@@ -1,4 +1,5 @@
 import TodoForm from '../TodoForm/TodoForm';
+import TodoView from '../TodoView/TodoView';
 
 function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	console.log('todos: ', todos);
@@ -19,19 +20,20 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 				Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 			</h3>
 			{todosForThisDay.length > 0 ? (
-				<>
-					<ul>
-						{todosForThisDay.map((todoObj) => (
-							<li key={todoObj.id}>
-								<div>
-									<h4>{todoObj.title}</h4>
-									<p>{todoObj.description}</p>
-									<span>{todoObj.dateAdded}</span>
-								</div>
-							</li>
-						))}
-					</ul>
-				</>
+				<div>
+					{todosForThisDay.map((todoObj) => (
+						<>
+							<TodoView todoObj={todoObj} crudOperations={crudOperations} />
+							{/* <li key={todoObj.id}>
+							<div>
+								<h4>{todoObj.title}</h4>
+								<p>{todoObj.description}</p>
+								<span>{todoObj.dateAdded}</span>
+							</div>
+						</li> */}
+						</>
+					))}
+				</div>
 			) : (
 				<>
 					<i>No todos due this day...</i>
