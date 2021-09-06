@@ -28,8 +28,24 @@ function App() {
 			copyOfTodos.push(todoObj);
 			setTodos(copyOfTodos);
 		},
-		deleteTodo: (id) => console.log('Delete todo with id: ', id),
-		updateTodo: (id) => console.log('Update todo with id: ', id),
+		deleteTodo: (id) => {
+			console.log('Delete todo with id: ', id);
+			// Make copy of todos
+
+			// Filter out the deleted todo
+
+			// Replace old todos with copy
+		},
+		updateTodo: (id) => {
+			console.log('Update todo with id: ', id);
+			// Make copy of todos
+
+			// Filter out the updated todo
+
+			// Add new version of updated todo to todos
+
+			// Replace old todos with copy
+		},
 	};
 
 	// const fetchAndSaveTodos = () => {

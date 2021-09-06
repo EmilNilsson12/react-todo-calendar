@@ -1,16 +1,17 @@
 import './TodoView.css';
 function TodoView({ todoObj, crudOperations }) {
-	const handleUpdateTodo = () => {
-		console.log('handleUpdateTodo clicked: ');
-		crudOperations.updateTodo();
+	const handleUpdateTodo = ({ target }) => {
+		const id = target.parentNode.parentNode.id;
+		crudOperations.updateTodo(id);
 	};
-	const handleDeleteTodo = () => {
-		console.log('handleDeleteTodo clicked: ');
-		crudOperations.deleteTodo();
+
+	const handleDeleteTodo = ({ target }) => {
+		const id = target.parentNode.parentNode.id;
+		crudOperations.deleteTodo(id);
 	};
 
 	return (
-		<div className='todo-view'>
+		<div className='todo-view' id={todoObj.id}>
 			<div>
 				<h4>{todoObj.title}</h4>
 				<p>{todoObj.description}</p>
