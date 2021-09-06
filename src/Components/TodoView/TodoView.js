@@ -5,13 +5,14 @@ import TodoForm from '../TodoForm/TodoForm';
 
 import './TodoView.css';
 
-function TodoView({ todoObj, crudOperations }) {
+function TodoView({ todoObj, crudOperations, handleTodoUpdate }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 
 	const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
 	const handleUpdateTodo = () => {
 		setCurrentlyUpdating(true);
+		handleTodoUpdate(todoObj);
 	};
 
 	const handleDeleteTodo = () => {

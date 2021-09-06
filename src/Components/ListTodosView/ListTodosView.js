@@ -8,9 +8,28 @@ import TodoView from '../TodoView/TodoView';
 
 function ListTodosView({ todos, crudOperations }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
+	const [updateParams, setUpdateParams] = useState({});
+
+	const handleTodoUpdate = (todoObj) => {
+		setCurrentlyUpdating(true);
+		setUpdateParams(todoObj);
+	};
 
 	const sortedByDueDate = [...todos.sort(compareByDates)];
-	return (
+	return currentlyUpdating ? (
+		<>
+			<div>
+				<TodoForm
+					addTodo={crudOperations.addTodo}
+					updateTodo={crudOperations.updateTodo}
+					defaultDate={moment(updateParams.deadline)}
+					updateParams={updateParams}
+					updateMode={true}
+					setCurrentlyUpdating={setCurrentlyUpdating}
+				/>
+			</div>
+		</>
+	) : (
 		<>
 			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
 			<div className='all-todos-listed'>
@@ -22,6 +41,7 @@ function ListTodosView({ todos, crudOperations }) {
 							key={i}
 							todoObj={todo}
 							momentObjFromTodo={momentObjFromTodo}
+							handleTodoUpdate={handleTodoUpdate}
 						/>
 					);
 				})}

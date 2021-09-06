@@ -11,6 +11,7 @@ function TodoForm({
 	updateTodo,
 	updateParams,
 	hideForm,
+	setCurrentlyUpdating,
 }) {
 	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
 	const [inputDesc, setInputDesc] = useState(updateParams?.description || '');
@@ -23,8 +24,7 @@ function TodoForm({
 		console.log('Success');
 
 		if (updateMode) {
-			// Hide updateform when done updating
-			hideForm();
+			setCurrentlyUpdating(false);
 
 			// Send new updateObj to App.js
 			updateTodo({
@@ -65,8 +65,7 @@ function TodoForm({
 		setInputDate(newDate);
 	};
 	const cancelUpdate = () => {
-		console.log('Update of todo canceled');
-		hideForm();
+		setCurrentlyUpdating(false);
 	};
 	return (
 		<form onSubmit={handleSubmit}>
