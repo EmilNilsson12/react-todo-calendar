@@ -17,18 +17,14 @@ function ListTodosView({ todos, crudOperations }) {
 
 	const sortedByDueDate = [...todos.sort(compareByDates)];
 	return currentlyUpdating ? (
-		<>
-			<div>
-				<TodoForm
-					addTodo={crudOperations.addTodo}
-					updateTodo={crudOperations.updateTodo}
-					defaultDate={moment(updateParams.deadline)}
-					updateParams={updateParams}
-					updateMode={true}
-					setCurrentlyUpdating={setCurrentlyUpdating}
-				/>
-			</div>
-		</>
+		<TodoForm
+			addTodo={crudOperations.addTodo}
+			updateTodo={crudOperations.updateTodo}
+			defaultDate={moment(updateParams.deadline)}
+			updateParams={updateParams}
+			updateMode={true}
+			setCurrentlyUpdating={setCurrentlyUpdating}
+		/>
 	) : (
 		<>
 			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
