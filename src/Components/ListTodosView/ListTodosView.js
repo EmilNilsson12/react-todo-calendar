@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import moment from 'moment';
 
 import './ListTodosView.css';
@@ -6,6 +7,8 @@ import TodoForm from '../TodoForm/TodoForm';
 import TodoView from '../TodoView/TodoView';
 
 function ListTodosView({ todos, crudOperations }) {
+	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
+
 	const sortedByDueDate = [...todos.sort(compareByDates)];
 	return (
 		<>

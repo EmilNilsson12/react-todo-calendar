@@ -8,16 +8,27 @@ import './TodoView.css';
 function TodoView({ todoObj, crudOperations }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 
-	const handleUpdateTodo = ({ target }) => {
-		const id = target.parentNode.parentNode.id;
+	const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
+
+	const handleUpdateTodo = () => {
 		setCurrentlyUpdating(true);
-		crudOperations.updateTodo(id);
 	};
 
-	const handleDeleteTodo = ({ target }) => {
+	const handleDeleteTodo = () => {
+		setConfirmDeleteVisible(true);
+	};
+
+	const cancelConfirmDeleteTodo = () => {
+		setConfirmDeleteVisible(false);
+	};
+
+	const confirmDeleteTodo = ({ target }) => {
 		const id = target.parentNode.parentNode.id;
 		crudOperations.deleteTodo(id);
+		setConfirmDeleteVisible(false);
 	};
+
+	const hideForm = () => setCurrentlyUpdating(false);
 
 	return (
 		<div className='todo-view' id={todoObj.id}>
@@ -31,11 +42,8 @@ function TodoView({ todoObj, crudOperations }) {
 							updateMode={true}
 							updateParams={todoObj}
 							updateTodo={crudOperations.updateTodo}
+							hideForm={hideForm}
 						/>
-					</div>
-					<div>
-						<button>Done</button>
-						<button>Cancel</button>
 					</div>
 				</>
 			) : (
@@ -46,8 +54,17 @@ function TodoView({ todoObj, crudOperations }) {
 						<span>{todoObj.dateAdded}</span>
 					</div>
 					<div>
-						<button onClick={handleUpdateTodo}>Update</button>
-						<button onClick={handleDeleteTodo}>Delete</button>
+						{confirmDeleteVisible ? (
+							<>
+								<button onClick={confirmDeleteTodo}>Confirm delete</button>
+								<button onClick={cancelConfirmDeleteTodo}>Cancel delete</button>
+							</>
+						) : (
+							<>
+								<button onClick={handleDeleteTodo}>Delete</button>
+								<button onClick={handleUpdateTodo}>Update</button>
+							</>
+						)}
 					</div>
 				</>
 			)}

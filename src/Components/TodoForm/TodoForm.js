@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,27 +10,37 @@ function TodoForm({
 	updateMode,
 	updateTodo,
 	updateParams,
+	hideForm,
 }) {
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		console.log('Success');
 
-		updateMode
-			? updateTodo({
-					title: inputTitle,
-					description: inputDescription,
-					deadline: inputDate.toISOString(),
-					id: updateParams.id,
-			  })
-			: addTodo({
-					title: inputTitle,
-					description: inputDescription,
-					deadline: inputDate.toISOString(),
-					id: uuidv4(),
-			  });
+		if (updateMode) {
+			// Hide updateform when done updating
+			hideForm();
+
+			// Send new updateObj to App.js
+			updateTodo({
+				title: inputTitle,
+				description: inputDescription,
+				deadline: inputDate.toISOString(),
+				id: updateParams.id,
+			});
+		} else {
+			addTodo({
+				title: inputTitle,
+				description: inputDescription,
+				deadline: inputDate.toISOString(),
+				id: uuidv4(),
+			});
+		}
 
 		setInputTitle('');
 		setInputDescription('');
+
+		// Focus on Title
+		firstFocusInputElement.current.focus();
 	};
 
 	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
@@ -38,6 +48,8 @@ function TodoForm({
 		updateParams?.description || ''
 	);
 	const [inputDate, setInputDate] = useState(defaultDate);
+
+	const firstFocusInputElement = useRef(null);
 
 	const handleTitleChange = ({ target }) => {
 		setInputTitle(target.value);
@@ -56,6 +68,7 @@ function TodoForm({
 	};
 	const cancelUpdate = () => {
 		console.log('Update of todo canceled');
+		hideForm();
 	};
 	return (
 		<form onSubmit={handleSubmit}>
@@ -66,6 +79,8 @@ function TodoForm({
 					value={inputTitle}
 					onChange={handleTitleChange}
 					required
+					autoFocus
+					ref={firstFocusInputElement}
 				/>
 			</label>
 			<label>
