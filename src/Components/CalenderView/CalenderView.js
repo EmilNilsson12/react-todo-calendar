@@ -125,6 +125,7 @@ function checkIfDayHasTodos(
 
 	let numOfDeadlinesOnThisDate = 0;
 	todos.forEach((todo) => {
+		console.log('todo.deadline: ', todo.deadline);
 		const thisDayHasDeadlines = todo.deadline.split('T')[0] === compareDate;
 		if (thisDayHasDeadlines) {
 			numOfDeadlinesOnThisDate++;

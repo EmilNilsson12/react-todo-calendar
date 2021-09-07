@@ -1,21 +1,31 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
+const defaultDate = moment().toISOString().split('T')[0];
+
 function TodoForm({
-	defaultDate,
 	addTodo,
 	updateMode,
 	updateTodo,
 	updateParams,
-	hideForm,
 	setCurrentlyUpdating,
 }) {
-	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
-	const [inputDesc, setInputDesc] = useState(updateParams?.description || '');
-	const [inputDate, setInputDate] = useState(defaultDate);
+	useEffect(() => {
+		if (updateParams) {
+			setInputTitle(updateParams.title);
+			setInputDesc(updateParams.description);
+			setInputDate(updateParams.deadline);
+			setInputDateValue(updateParams.deadline.split('T')[0]);
+		}
+	}, [updateParams]);
+
+	const [inputTitle, setInputTitle] = useState();
+	const [inputDesc, setInputDesc] = useState();
+	const [inputDate, setInputDate] = useState();
+	const [inputDateValue, setInputDateValue] = useState(defaultDate);
 
 	const firstFocusInputElement = useRef(null);
 
@@ -59,13 +69,25 @@ function TodoForm({
 
 	const handleDateChange = ({ target }) => {
 		let dateComponent = target.value;
-		let timeComponent = defaultDate.toISOString().split('T')[1];
-		let newDate = moment(dateComponent + 'T' + timeComponent);
+		console.log('dateComponent: ', dateComponent);
+
+		let timeComponent = moment(inputDate).toISOString().split('T')[1];
+		console.log('timeComponent: ', timeComponent);
+
+		let datePlusTime = dateComponent + 'T' + timeComponent;
+
+		let newDate = moment(datePlusTime);
+		console.log('newDate: ', newDate);
 
 		setInputDate(newDate);
+		setInputDateValue(dateComponent);
 	};
 	const cancelUpdate = () => {
 		setCurrentlyUpdating(false);
+
+		setInputTitle('');
+		setInputDesc('');
+		setInputDateValue(defaultDate);
 	};
 	return (
 		<form onSubmit={handleSubmit}>
@@ -88,7 +110,7 @@ function TodoForm({
 				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
 				<input
 					type='date'
-					value={inputDate.toISOString().split('T')[0]}
+					value={inputDateValue}
 					onChange={handleDateChange}
 					required
 				/>
