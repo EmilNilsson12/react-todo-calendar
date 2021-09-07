@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import './TodoForm.css';
 
 function TodoForm({
-	defaultDate,
 	addTodo,
 	updateMode,
 	updateTodo,
@@ -13,22 +12,11 @@ function TodoForm({
 	setCurrentlyUpdating,
 }) {
 	useEffect(() => {
-		console.log('updateParams: ', updateParams);
-
 		if (updateParams) {
-			console.log('updateParams.title: ', updateParams.title);
-			console.log('updateParams.description: ', updateParams.description);
-			console.log('updateParams.deadline: ', updateParams.deadline);
-
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
 			setInputDate(updateParams.deadline);
 			setInputDateValue(updateParams.deadline.split('T')[0]);
-
-			console.log('inputTitle: ', inputTitle);
-			console.log('inputDesc: ', inputDesc);
-			console.log('inputDate: ', inputDate);
-			console.log('inputDateValue: ', inputDateValue);
 		}
 	}, [updateParams]);
 
