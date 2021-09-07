@@ -10,8 +10,14 @@ function TodoForm({
 	updateTodo,
 	updateParams,
 	setCurrentlyUpdating,
+	dayToShow,
 }) {
 	useEffect(() => {
+		if (dayToShow) {
+			setInputDate(dayToShow);
+			setInputDateValue(dayToShow.toISOString().split('T')[0]);
+		}
+
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);

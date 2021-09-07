@@ -23,6 +23,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 			updateParams={updateParams}
 			updateMode={true}
 			setCurrentlyUpdating={setCurrentlyUpdating}
+			dayToShow={dayToShow}
 		/>
 	) : (
 		<div>
@@ -43,7 +44,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 			) : (
 				<i>No todos due this day...</i>
 			)}
-			<TodoForm addTodo={crudOperations.addTodo} />
+			<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 		</div>
 	);
 }
