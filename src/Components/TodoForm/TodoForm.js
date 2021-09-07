@@ -82,11 +82,7 @@ function TodoForm({
 			</label>
 			<label>
 				Additional info
-				<input
-					type='text'
-					value={inputDesc}
-					onChange={handleDescriptionChange}
-				/>
+				<textarea value={inputDesc} onChange={handleDescriptionChange} />
 			</label>
 			<label>
 				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
