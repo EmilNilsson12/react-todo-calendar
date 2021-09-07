@@ -32,7 +32,6 @@ function TodoForm({
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
-		console.log('Success');
 
 		if (updateMode) {
 			setCurrentlyUpdating(false);
@@ -70,15 +69,12 @@ function TodoForm({
 
 	const handleDateChange = ({ target }) => {
 		let dateComponent = target.value;
-		console.log('dateComponent: ', dateComponent);
 
 		let timeComponent = moment(inputDate).toISOString().split('T')[1];
-		console.log('timeComponent: ', timeComponent);
 
 		let datePlusTime = dateComponent + 'T' + timeComponent;
 
 		let newDate = moment(datePlusTime);
-		console.log('newDate: ', newDate);
 
 		setInputDate(newDate);
 		setInputDateValue(dateComponent);
