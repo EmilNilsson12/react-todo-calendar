@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
-const defaultDate = moment().toISOString().split('T')[0];
+const defaultDate = moment();
+const defaultDateAsValue = defaultDate.toISOString().split('T')[0];
 
 function TodoForm({
 	addTodo,
@@ -22,10 +23,10 @@ function TodoForm({
 		}
 	}, [updateParams]);
 
-	const [inputTitle, setInputTitle] = useState();
-	const [inputDesc, setInputDesc] = useState();
-	const [inputDate, setInputDate] = useState();
-	const [inputDateValue, setInputDateValue] = useState(defaultDate);
+	const [inputTitle, setInputTitle] = useState('');
+	const [inputDesc, setInputDesc] = useState('');
+	const [inputDate, setInputDate] = useState(defaultDate);
+	const [inputDateValue, setInputDateValue] = useState(defaultDateAsValue);
 
 	const firstFocusInputElement = useRef(null);
 

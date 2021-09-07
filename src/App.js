@@ -22,7 +22,6 @@ function App() {
 			setTodos(copyOfTodos);
 		},
 		deleteTodo: (id) => {
-			console.log('Delete todo with id: ', id);
 			// Make copy of todos
 			// Filter out the deleted todo
 			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
@@ -31,14 +30,10 @@ function App() {
 			setTodos(copyOfTodos);
 		},
 		updateTodo: (updatedTodoObj) => {
-			console.log('Update todo with id: ', updatedTodoObj.id);
-
 			// Find relevant entry
 			const todoToBeUpdated = todos.find(
 				(todo) => todo.id === updatedTodoObj.id
 			);
-			console.log('todoToBeUpdated: ', todoToBeUpdated);
-			console.log('updatedTodoObj: ', updatedTodoObj);
 
 			// Make copy of todos
 			// Filter out the updated todo
