@@ -15,7 +15,7 @@ function TodoForm({
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
-			setInputDate(updateParams.deadline);
+			setInputDate(moment(updateParams.deadline));
 			setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
 	}, [updateParams]);
