@@ -53,6 +53,7 @@ function TodoForm({
 
 		setInputTitle('');
 		setInputDesc('');
+		setInputDate(moment());
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
@@ -83,6 +84,7 @@ function TodoForm({
 
 		setInputTitle('');
 		setInputDesc('');
+		setInputDate(moment());
 		setInputDateValue(moment().toISOString().split('T')[0]);
 	};
 	return (
@@ -103,7 +105,7 @@ function TodoForm({
 				<textarea value={inputDesc} onChange={handleDescriptionChange} />
 			</label>
 			<label>
-				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
+				Deadline: <b>{inputDate.endOf('days').fromNow()}</b>
 				<input
 					type='date'
 					value={inputDateValue}
