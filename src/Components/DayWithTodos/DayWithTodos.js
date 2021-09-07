@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import moment from 'moment';
 
 import TodoForm from '../TodoForm/TodoForm';
 import TodoView from '../TodoView/TodoView';

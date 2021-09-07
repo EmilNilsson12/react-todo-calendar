@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
-const defaultDate = moment().toISOString().split('T')[0];
-
 function TodoForm({
 	addTodo,
 	updateMode,
@@ -17,21 +15,22 @@ function TodoForm({
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
-			setInputDate(updateParams.deadline);
+			setInputDate(moment(updateParams.deadline));
 			setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
 	}, [updateParams]);
 
-	const [inputTitle, setInputTitle] = useState();
-	const [inputDesc, setInputDesc] = useState();
-	const [inputDate, setInputDate] = useState();
-	const [inputDateValue, setInputDateValue] = useState(defaultDate);
+	const [inputTitle, setInputTitle] = useState('');
+	const [inputDesc, setInputDesc] = useState('');
+	const [inputDate, setInputDate] = useState(moment());
+	const [inputDateValue, setInputDateValue] = useState(
+		moment().toISOString().split('T')[0]
+	);
 
 	const firstFocusInputElement = useRef(null);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
-		console.log('Success');
 
 		if (updateMode) {
 			setCurrentlyUpdating(false);
@@ -54,6 +53,7 @@ function TodoForm({
 
 		setInputTitle('');
 		setInputDesc('');
+		setInputDate(moment());
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
@@ -69,15 +69,12 @@ function TodoForm({
 
 	const handleDateChange = ({ target }) => {
 		let dateComponent = target.value;
-		console.log('dateComponent: ', dateComponent);
 
 		let timeComponent = moment(inputDate).toISOString().split('T')[1];
-		console.log('timeComponent: ', timeComponent);
 
 		let datePlusTime = dateComponent + 'T' + timeComponent;
 
 		let newDate = moment(datePlusTime);
-		console.log('newDate: ', newDate);
 
 		setInputDate(newDate);
 		setInputDateValue(dateComponent);
@@ -87,7 +84,8 @@ function TodoForm({
 
 		setInputTitle('');
 		setInputDesc('');
-		setInputDateValue(defaultDate);
+		setInputDate(moment());
+		setInputDateValue(moment().toISOString().split('T')[0]);
 	};
 	return (
 		<form onSubmit={handleSubmit}>
@@ -107,7 +105,7 @@ function TodoForm({
 				<textarea value={inputDesc} onChange={handleDescriptionChange} />
 			</label>
 			<label>
-				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
+				Deadline: <b>{inputDate.endOf('days').fromNow()}</b>
 				<input
 					type='date'
 					value={inputDateValue}
