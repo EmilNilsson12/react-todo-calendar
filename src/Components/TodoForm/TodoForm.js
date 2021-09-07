@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,9 +12,33 @@ function TodoForm({
 	updateParams,
 	setCurrentlyUpdating,
 }) {
-	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
-	const [inputDesc, setInputDesc] = useState(updateParams?.description || '');
-	const [inputDate, setInputDate] = useState(defaultDate);
+	useEffect(() => {
+		console.log('updateParams: ', updateParams);
+
+		if (updateParams) {
+			console.log('updateParams.title: ', updateParams.title);
+			console.log('updateParams.description: ', updateParams.description);
+			console.log('updateParams.deadline: ', updateParams.deadline);
+
+			setInputTitle(updateParams.title);
+			setInputDesc(updateParams.description);
+			setInputDate(updateParams.deadline);
+			setInputDateValue(updateParams.deadline.split('T')[0]);
+
+			console.log('inputTitle: ', inputTitle);
+			console.log('inputDesc: ', inputDesc);
+			console.log('inputDate: ', inputDate);
+			console.log('inputDateValue: ', inputDateValue);
+		}
+	}, [updateParams]);
+
+	const [inputTitle, setInputTitle] = useState();
+	const [inputDesc, setInputDesc] = useState();
+	const [inputDate, setInputDate] = useState();
+
+	const [inputDateValue, setInputDateValue] = useState(
+		moment().toISOString().split('T')[0]
+	);
 
 	const firstFocusInputElement = useRef(null);
 
@@ -29,14 +53,14 @@ function TodoForm({
 			updateTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate,
 				id: updateParams.id,
 			});
 		} else {
 			addTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate,
 				id: uuidv4(),
 			});
 		}
@@ -58,10 +82,16 @@ function TodoForm({
 
 	const handleDateChange = ({ target }) => {
 		let dateComponent = target.value;
-		let timeComponent = defaultDate.toISOString().split('T')[1];
+		console.log('dateComponent: ', dateComponent);
+
+		let timeComponent = moment(inputDate).toISOString().split('T')[1];
+		console.log('timeComponent: ', timeComponent);
+
 		let newDate = moment(dateComponent + 'T' + timeComponent);
+		console.log('newDate: ', newDate);
 
 		setInputDate(newDate);
+		setInputDateValue(dateComponent);
 	};
 	const cancelUpdate = () => {
 		setCurrentlyUpdating(false);
@@ -87,7 +117,7 @@ function TodoForm({
 				Deadline: <b>{moment(inputDate).add(8, 'h').fromNow()}</b>
 				<input
 					type='date'
-					value={inputDate.toISOString().split('T')[0]}
+					value={inputDateValue}
 					onChange={handleDateChange}
 					required
 				/>
