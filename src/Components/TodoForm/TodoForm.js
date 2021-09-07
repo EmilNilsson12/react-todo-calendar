@@ -10,7 +10,6 @@ function TodoForm({
 	updateMode,
 	updateTodo,
 	updateParams,
-	hideForm,
 	setCurrentlyUpdating,
 }) {
 	const [inputTitle, setInputTitle] = useState(updateParams?.title || '');
