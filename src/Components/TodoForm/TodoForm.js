@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './TodoForm.css';
 
+const defaultDate = moment().toISOString().split('T')[0];
+
 function TodoForm({
 	addTodo,
 	updateMode,
@@ -23,10 +25,7 @@ function TodoForm({
 	const [inputTitle, setInputTitle] = useState();
 	const [inputDesc, setInputDesc] = useState();
 	const [inputDate, setInputDate] = useState();
-
-	const [inputDateValue, setInputDateValue] = useState(
-		moment().toISOString().split('T')[0]
-	);
+	const [inputDateValue, setInputDateValue] = useState(defaultDate);
 
 	const firstFocusInputElement = useRef(null);
 
@@ -41,14 +40,14 @@ function TodoForm({
 			updateTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate,
+				deadline: inputDate.toISOString(),
 				id: updateParams.id,
 			});
 		} else {
 			addTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate,
+				deadline: inputDate.toISOString(),
 				id: uuidv4(),
 			});
 		}
@@ -75,7 +74,9 @@ function TodoForm({
 		let timeComponent = moment(inputDate).toISOString().split('T')[1];
 		console.log('timeComponent: ', timeComponent);
 
-		let newDate = moment(dateComponent + 'T' + timeComponent);
+		let datePlusTime = dateComponent + 'T' + timeComponent;
+
+		let newDate = moment(datePlusTime);
 		console.log('newDate: ', newDate);
 
 		setInputDate(newDate);
@@ -83,6 +84,10 @@ function TodoForm({
 	};
 	const cancelUpdate = () => {
 		setCurrentlyUpdating(false);
+
+		setInputTitle('');
+		setInputDesc('');
+		setInputDateValue(defaultDate);
 	};
 	return (
 		<form onSubmit={handleSubmit}>
