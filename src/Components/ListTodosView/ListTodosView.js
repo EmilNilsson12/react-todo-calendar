@@ -37,52 +37,60 @@ function ListTodosView({
 		/>
 	) : (
 		<div
-			className={`${
-				insideDayWithTodos
-					? 'list-todos-component-inside-day-with-todos'
-					: 'list-todos-component'
-			}`}
+			className={`
+			${showingText ? 'testing-grid' : ''}
+		`}
 		>
-			<label>
-				{showIncompleteOnly
-					? `${
-							showingText
-								? `Showing only incomplete todos due on ${showingText}`
-								: 'Showing: All'
-					  }`
-					: `${
-							showingText
-								? `Showing all todos due on: ${showingText}`
-								: 'Showing: Only incomplete'
-					  }`}
-				<br />
-				{showIncompleteOnly
-					? 'Click to show all'
-					: 'Click to show only incomplete'}
-				<input
-					type='checkbox'
-					onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
-				/>
-			</label>
+			{showingText ? <TodoForm /> : <></>}
+
 			<div
-				className={`
+				className={`${
+					insideDayWithTodos
+						? 'list-todos-component-inside-day-with-todos'
+						: 'list-todos-component'
+				}`}
+			>
+				<label>
+					{showIncompleteOnly
+						? `${
+								showingText
+									? `Showing only incomplete todos due on ${showingText}`
+									: 'Showing: All'
+						  }`
+						: `${
+								showingText
+									? `Showing all todos due on: ${showingText}`
+									: 'Showing: Only incomplete'
+						  }`}
+					<br />
+					{showIncompleteOnly
+						? 'Click to show all'
+						: 'Click to show only incomplete'}
+					<input
+						type='checkbox'
+						onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
+					/>
+				</label>
+				<div
+					className={`
 			all-todos-listed
 			${insideDayWithTodos ? 'inside-day-with-todos' : ''}
 			`}
-			>
-				{sortedByDueDate.map((todo) => {
-					const momentObjFromTodo = moment(todo.deadline);
-					return (
-						<TodoView
-							key={todo.id}
-							todoObj={todo}
-							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
-							deleteTodo={crudOperations.deleteTodo}
-							momentObjFromTodo={momentObjFromTodo}
-							beginEdit={handleTodoUpdate}
-						/>
-					);
-				})}
+				>
+					{sortedByDueDate.map((todo) => {
+						const momentObjFromTodo = moment(todo.deadline);
+						return (
+							<TodoView
+								key={todo.id}
+								todoObj={todo}
+								toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+								deleteTodo={crudOperations.deleteTodo}
+								momentObjFromTodo={momentObjFromTodo}
+								beginEdit={handleTodoUpdate}
+							/>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);

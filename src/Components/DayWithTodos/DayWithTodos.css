@@ -1,4 +1,9 @@
-.day-with-todos {
+/* .day-with-todos {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+} */
+
+.day-w-out-todos {
 	display: grid;
 	grid-template-columns: 1fr 4fr;
 }

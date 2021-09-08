@@ -17,3 +17,8 @@
 .inside-day-with-todos {
 	height: 50vh;
 }
+
+.testing-grid {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+}
