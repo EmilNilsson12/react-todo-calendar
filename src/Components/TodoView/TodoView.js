@@ -21,14 +21,13 @@ function TodoView({ todoObj, toggleCompleteTodo, deleteTodo, beginEdit }) {
 		setConfirmDeleteVisible(false);
 	};
 
-	const confirmDeleteTodo = ({ target }) => {
-		const id = target.parentNode.parentNode.id;
-		deleteTodo(id);
+	const confirmDeleteTodo = () => {
+		deleteTodo(todoObj.id);
 		setConfirmDeleteVisible(false);
 	};
 
 	return (
-		<div className='todo-view' id={todoObj.id}>
+		<div className='todo-view'>
 			<div>
 				<h4>{todoObj.title}</h4>
 				<p>{todoObj.description}</p>

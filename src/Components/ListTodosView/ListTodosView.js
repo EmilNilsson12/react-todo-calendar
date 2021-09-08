@@ -33,7 +33,7 @@ function ListTodosView({ todos, crudOperations }) {
 					const momentObjFromTodo = moment(todo.deadline);
 					return (
 						<TodoView
-							key={i}
+							key={todo.id}
 							todoObj={todo}
 							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
 							deleteTodo={crudOperations.deleteTodo}

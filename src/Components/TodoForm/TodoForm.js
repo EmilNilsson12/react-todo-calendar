@@ -6,11 +6,11 @@ import './TodoForm.css';
 
 function TodoForm({
 	addTodo,
-	updateMode,
 	updateTodo,
+	dayToShow,
+	updateMode,
 	updateParams,
 	setCurrentlyUpdating,
-	dayToShow,
 }) {
 	useEffect(() => {
 		if (dayToShow) {
