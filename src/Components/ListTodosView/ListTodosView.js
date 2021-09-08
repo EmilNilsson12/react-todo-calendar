@@ -30,7 +30,6 @@ function ListTodosView({
 		<TodoForm
 			addTodo={crudOperations.addTodo}
 			updateTodo={crudOperations.updateTodo}
-			defaultDate={moment(updateParams.deadline)}
 			updateParams={updateParams}
 			updateMode={true}
 			setCurrentlyUpdating={setCurrentlyUpdating}
@@ -41,7 +40,7 @@ function ListTodosView({
 			${showingText ? 'testing-grid' : ''}
 		`}
 		>
-			{showingText ? <TodoForm /> : <></>}
+			{showingText ? <TodoForm addTodo={crudOperations.addTodo} /> : <></>}
 
 			<div
 				className={`${

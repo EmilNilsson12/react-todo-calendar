@@ -39,7 +39,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 					/>
 				) : (
 					<div className='day-w-out-todos'>
-						<TodoForm dayToShow={dayToShow} />
+						<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 						<div>
 							<i>No todos due this day...</i>{' '}
 							<u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
