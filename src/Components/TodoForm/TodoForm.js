@@ -6,13 +6,16 @@ import './TodoForm.css';
 
 function TodoForm({
 	addTodo,
-	updateMode,
 	updateTodo,
+	dayToShow,
+	updateMode,
 	updateParams,
 	setCurrentlyUpdating,
-	dayToShow,
 }) {
 	useEffect(() => {
+		// Makes sure title input is in focus even when initiating an update
+		firstFocusInputElement.current.focus();
+
 		if (dayToShow) {
 			setInputDate(dayToShow);
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
@@ -24,7 +27,7 @@ function TodoForm({
 			setInputDate(moment(updateParams.deadline));
 			setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
-	}, [updateParams]);
+	}, [updateMode]);
 
 	const [inputTitle, setInputTitle] = useState('');
 	const [inputDesc, setInputDesc] = useState('');
@@ -60,6 +63,7 @@ function TodoForm({
 		setInputTitle('');
 		setInputDesc('');
 		setInputDate(moment());
+		setInputDateValue(moment().toISOString().split('T')[0]);
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
@@ -123,12 +127,10 @@ function TodoForm({
 				<button type='submit'>
 					{updateMode ? 'Update todo' : 'Add new Todo'}
 				</button>
-				{updateMode ? (
+				{updateMode && (
 					<button type='button' onClick={cancelUpdate}>
 						Cancel
 					</button>
-				) : (
-					<></>
 				)}
 			</div>
 		</form>

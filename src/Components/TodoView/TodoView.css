@@ -4,8 +4,24 @@
 
 	display: flex;
 	justify-content: space-between;
+	height: 110px;
 }
 
 .todo-view div {
 	border: 1px solid black;
+}
+
+.todo-completed {
+	background-color: green;
+}
+
+.todo-btns {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 140px;
+}
+
+.todo-btns button {
+	flex-grow: 1;
 }

@@ -29,12 +29,24 @@ function App() {
 			// Replace old todos with copy
 			setTodos(copyOfTodos);
 		},
-		updateTodo: (updatedTodoObj) => {
-			// Find relevant entry
-			const todoToBeUpdated = todos.find(
-				(todo) => todo.id === updatedTodoObj.id
-			);
+		toggleCompleteTodo: ({ id }) => {
+			// Make copy of todos
+			// Filter out the completed todo
+			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
 
+			// Find relevant entry
+			const todoToBeUpdated = todos.find((todo) => todo.id === id);
+
+			// Update key completed to opposite of inital value
+			todoToBeUpdated.completed = !todoToBeUpdated.completed;
+
+			// Add new version of updated todo to todos
+			copyOfTodos.push(todoToBeUpdated);
+
+			// Replace old todos with copy
+			setTodos(copyOfTodos);
+		},
+		updateTodo: (updatedTodoObj) => {
 			// Make copy of todos
 			// Filter out the updated todo
 			const copyOfTodos = [...todos].filter(
@@ -43,6 +55,7 @@ function App() {
 
 			// Add new version of updated todo to todos
 			copyOfTodos.push(updatedTodoObj);
+
 			// Replace old todos with copy
 			setTodos(copyOfTodos);
 		},
