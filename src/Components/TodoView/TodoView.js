@@ -27,13 +27,18 @@ function TodoView({ todoObj, toggleCompleteTodo, deleteTodo, beginEdit }) {
 	};
 
 	return (
-		<div className='todo-view'>
+		<div
+			className={`
+			todo-view
+			${todoObj.completed ? 'todo-completed' : ''}
+		`}
+		>
 			<div>
 				<h4>{todoObj.title}</h4>
 				<p>{todoObj.description}</p>
 				<span>{todoObj.dateAdded}</span>
 			</div>
-			<div>
+			<div className='todo-btns'>
 				{confirmDeleteVisible ? (
 					<>
 						<button onClick={confirmDeleteTodo}>Confirm delete</button>
@@ -43,7 +48,9 @@ function TodoView({ todoObj, toggleCompleteTodo, deleteTodo, beginEdit }) {
 					<>
 						<button onClick={handleDeleteTodo}>Delete</button>
 						<button onClick={handleUpdateTodo}>Update</button>
-						<button onClick={handleCompleteTodo}>Mark as complete</button>
+						<button onClick={handleCompleteTodo}>
+							{todoObj.completed ? 'Unmark as complete' : 'Mark as complete'}
+						</button>
 					</>
 				)}
 			</div>
