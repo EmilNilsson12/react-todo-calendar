@@ -34,6 +34,10 @@ function ListTodosView({ todos, crudOperations }) {
 		<div>
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
+				<br />
+				{showIncompleteOnly
+					? 'Click to show all'
+					: 'Click to show only incomplete'}
 				<input
 					type='checkbox'
 					onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
