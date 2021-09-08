@@ -60,6 +60,7 @@ function TodoForm({
 		setInputTitle('');
 		setInputDesc('');
 		setInputDate(moment());
+		setInputDateValue(moment().toISOString().split('T')[0]);
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
