@@ -31,18 +31,7 @@ function ListTodosView({ todos, crudOperations, insideDayWithTodos }) {
 			setCurrentlyUpdating={setCurrentlyUpdating}
 		/>
 	) : (
-		<div>
-			{insideDayWithTodos ? (
-				<span style={{ backgroundColor: 'yellow' }}>
-					inside day with todos
-					<br />
-				</span>
-			) : (
-				<span style={{ backgroundColor: 'yellow' }}>
-					on the side menu
-					<br />
-				</span>
-			)}
+		<div className={`${insideDayWithTodos ? '' : 'list-todos-component'}`}>
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
 				<br />

@@ -1,5 +1,9 @@
+.list-todos-component {
+	display: grid;
+	grid-template-rows: auto 95vh;
+}
+
 .all-todos-listed {
-	height: 90vh;
 	overflow-y: scroll;
 }
 
