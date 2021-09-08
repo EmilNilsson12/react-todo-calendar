@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import CalenderView from './Components/CalenderView/CalenderView';
 import ListTodosView from './Components/ListTodosView/ListTodosView';
-import SwapView from './Components/SwapView/SwapView';
 
 function App() {
-	// const [showCalender, toggleShowCalender] = useState(false);
-
 	const [todos, setTodos] = useState(
 		JSON.parse(localStorage.getItem('todos')) || []
 	);
@@ -61,11 +58,6 @@ function App() {
 		},
 	};
 
-	// const callBacks = {
-	// 	swapView: () => {
-	// 		toggleShowCalender(!showCalender);
-	// 	},
-	// };
 	return (
 		<div className='App'>
 			<ListTodosView todos={todos} crudOperations={crudOperations} />
