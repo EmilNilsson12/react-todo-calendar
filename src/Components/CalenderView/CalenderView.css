@@ -1,6 +1,5 @@
 .calendar {
 	display: grid;
-	/* grid-gap: 30px; */
 	grid-template-rows: 40vh 40vh;
 }
 
@@ -41,7 +40,6 @@
 	background-color: rgba(0, 0, 255, 0.3);
 	gap: 5px;
 	padding: 3px;
-	/* height: 50vh; */
 }
 
 .day-div {
