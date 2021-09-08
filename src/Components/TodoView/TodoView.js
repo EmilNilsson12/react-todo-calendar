@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 import './TodoView.css';
 
-function TodoView({ todoObj, crudOperations, handleTodoUpdate }) {
+function TodoView({ todoObj, toggleCompleteTodo, deleteTodo, beginEdit }) {
 	const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
 	const handleCompleteTodo = () => {
-		crudOperations.toggleCompleteTodo(todoObj);
+		toggleCompleteTodo(todoObj);
 	};
 
 	const handleUpdateTodo = () => {
-		handleTodoUpdate(todoObj);
+		beginEdit(todoObj);
 	};
 
 	const handleDeleteTodo = () => {
@@ -23,7 +23,7 @@ function TodoView({ todoObj, crudOperations, handleTodoUpdate }) {
 
 	const confirmDeleteTodo = ({ target }) => {
 		const id = target.parentNode.parentNode.id;
-		crudOperations.deleteTodo(id);
+		deleteTodo(id);
 		setConfirmDeleteVisible(false);
 	};
 

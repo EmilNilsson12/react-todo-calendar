@@ -36,8 +36,9 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 						<TodoView
 							key={todoObj.id}
 							todoObj={todoObj}
-							crudOperations={crudOperations}
-							handleTodoUpdate={handleTodoUpdate}
+							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+							deleteTodo={crudOperations.deleteTodo}
+							beginEdit={handleTodoUpdate}
 						/>
 					))}
 				</div>

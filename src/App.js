@@ -31,12 +31,13 @@ function App() {
 		},
 		toggleCompleteTodo: ({ id }) => {
 			// Make copy of todos
-			// Filter out the updated todo
+			// Filter out the completed todo
 			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
 
 			// Find relevant entry
 			const todoToBeUpdated = todos.find((todo) => todo.id === id);
-			console.log('todoToBeUpdated: ', todoToBeUpdated);
+
+			// Update key completed to opposite of inital value
 			todoToBeUpdated.completed = !todoToBeUpdated.completed;
 
 			// Add new version of updated todo to todos
