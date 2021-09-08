@@ -31,7 +31,7 @@ function ListTodosView({ todos, crudOperations }) {
 			setCurrentlyUpdating={setCurrentlyUpdating}
 		/>
 	) : (
-		<>
+		<div>
 			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
@@ -55,7 +55,7 @@ function ListTodosView({ todos, crudOperations }) {
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 }
 

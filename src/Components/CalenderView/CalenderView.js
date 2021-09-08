@@ -87,7 +87,7 @@ function CalenderView({ todos, crudOperations }) {
 		return components;
 	};
 	return (
-		<>
+		<div className='calendar'>
 			<div className='month-view'>
 				<h2>
 					<i>
@@ -104,7 +104,7 @@ function CalenderView({ todos, crudOperations }) {
 				todos={todos}
 				crudOperations={crudOperations}
 			/>
-		</>
+		</div>
 	);
 }
 

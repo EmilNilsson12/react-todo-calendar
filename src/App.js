@@ -5,7 +5,7 @@ import ListTodosView from './Components/ListTodosView/ListTodosView';
 import SwapView from './Components/SwapView/SwapView';
 
 function App() {
-	const [showCalender, toggleShowCalender] = useState(false);
+	// const [showCalender, toggleShowCalender] = useState(false);
 
 	const [todos, setTodos] = useState(
 		JSON.parse(localStorage.getItem('todos')) || []
@@ -61,19 +61,15 @@ function App() {
 		},
 	};
 
-	const callBacks = {
-		swapView: () => {
-			toggleShowCalender(!showCalender);
-		},
-	};
+	// const callBacks = {
+	// 	swapView: () => {
+	// 		toggleShowCalender(!showCalender);
+	// 	},
+	// };
 	return (
 		<div className='App'>
-			<SwapView cbFunc={callBacks.swapView} />
-			{showCalender ? (
-				<CalenderView todos={todos} crudOperations={crudOperations} />
-			) : (
-				<ListTodosView todos={todos} crudOperations={crudOperations} />
-			)}
+			<ListTodosView todos={todos} crudOperations={crudOperations} />
+			<CalenderView todos={todos} crudOperations={crudOperations} />
 		</div>
 	);
 }
