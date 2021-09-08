@@ -32,7 +32,6 @@ function ListTodosView({ todos, crudOperations }) {
 		/>
 	) : (
 		<div>
-			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
 				<input
