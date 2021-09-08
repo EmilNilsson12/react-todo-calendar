@@ -31,14 +31,12 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 		<div className='day-with-todos'>
 			<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 			<div className='grid-day-with-todos'>
-				<h3>
-					Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
-				</h3>
 				{todosForThisDay.length > 0 ? (
 					<ListTodosView
 						todos={todosForThisDay}
 						crudOperations={crudOperations}
 						insideDayWithTodos={true}
+						showingText={dayToShow.format('D [of] MMMM, YYYY')}
 					/>
 				) : (
 					<i>No todos due this day...</i>

@@ -6,7 +6,12 @@ import './ListTodosView.css';
 import TodoForm from '../TodoForm/TodoForm';
 import TodoView from '../TodoView/TodoView';
 
-function ListTodosView({ todos, crudOperations, insideDayWithTodos }) {
+function ListTodosView({
+	todos,
+	crudOperations,
+	insideDayWithTodos,
+	showingText,
+}) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
@@ -39,7 +44,17 @@ function ListTodosView({ todos, crudOperations, insideDayWithTodos }) {
 			}`}
 		>
 			<label>
-				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
+				{showIncompleteOnly
+					? `${
+							showingText
+								? `Showing only incomplete todos due on ${showingText}`
+								: 'Showing: All'
+					  }`
+					: `${
+							showingText
+								? `Showing all todos due on: ${showingText}`
+								: 'Showing: Only incomplete'
+					  }`}
 				<br />
 				{showIncompleteOnly
 					? 'Click to show all'
