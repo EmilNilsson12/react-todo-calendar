@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import './DayWithTodos.css';
+
 import TodoForm from '../TodoForm/TodoForm';
-import TodoView from '../TodoView/TodoView';
+import ListTodosView from '../ListTodosView/ListTodosView';
 
 function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	const todosForThisDay = todos.filter((todo) =>
@@ -26,26 +28,21 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 			dayToShow={dayToShow}
 		/>
 	) : (
-		<div>
-			<h3>
-				Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
-			</h3>
-			{todosForThisDay.length > 0 ? (
-				<div>
-					{todosForThisDay.map((todoObj) => (
-						<TodoView
-							key={todoObj.id}
-							todoObj={todoObj}
-							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
-							deleteTodo={crudOperations.deleteTodo}
-							beginEdit={handleTodoUpdate}
-						/>
-					))}
-				</div>
-			) : (
-				<i>No todos due this day...</i>
-			)}
+		<div className='day-with-todos'>
 			<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
+			<div>
+				<h3>
+					Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
+				</h3>
+				{todosForThisDay.length > 0 ? (
+					<ListTodosView
+						todos={todosForThisDay}
+						crudOperations={crudOperations}
+					/>
+				) : (
+					<i>No todos due this day...</i>
+				)}
+			</div>
 		</div>
 	);
 }
