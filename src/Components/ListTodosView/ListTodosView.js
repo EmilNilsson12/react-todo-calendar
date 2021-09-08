@@ -29,7 +29,7 @@ function ListTodosView({ todos, crudOperations }) {
 		<>
 			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
 			<div className='all-todos-listed'>
-				{sortedByDueDate.map((todo, i) => {
+				{sortedByDueDate.map((todo) => {
 					const momentObjFromTodo = moment(todo.deadline);
 					return (
 						<TodoView
