@@ -6,7 +6,13 @@ import './ListTodosView.css';
 import TodoForm from '../TodoForm/TodoForm';
 import TodoView from '../TodoView/TodoView';
 
-function ListTodosView({ todos, crudOperations }) {
+function ListTodosView({
+	todos,
+	crudOperations,
+	insideDayWithTodos,
+	showingText,
+	dayToShow,
+}) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
@@ -25,37 +31,72 @@ function ListTodosView({ todos, crudOperations }) {
 		<TodoForm
 			addTodo={crudOperations.addTodo}
 			updateTodo={crudOperations.updateTodo}
-			defaultDate={moment(updateParams.deadline)}
 			updateParams={updateParams}
 			updateMode={true}
 			setCurrentlyUpdating={setCurrentlyUpdating}
 		/>
 	) : (
-		<>
-			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
-			<label>
-				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
-				<input
-					type='checkbox'
-					onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
-				/>
-			</label>
-			<div className='all-todos-listed'>
-				{sortedByDueDate.map((todo) => {
-					const momentObjFromTodo = moment(todo.deadline);
-					return (
-						<TodoView
-							key={todo.id}
-							todoObj={todo}
-							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
-							deleteTodo={crudOperations.deleteTodo}
-							momentObjFromTodo={momentObjFromTodo}
-							beginEdit={handleTodoUpdate}
-						/>
-					);
-				})}
+		<div
+			className={`
+			${showingText ? 'testing-grid' : ''}
+		`}
+		>
+			{showingText ? (
+				<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
+			) : (
+				<></>
+			)}
+
+			<div
+				className={`${
+					insideDayWithTodos
+						? 'list-todos-component-inside-day-with-todos'
+						: 'list-todos-component'
+				}`}
+			>
+				<label>
+					{showIncompleteOnly
+						? `${
+								showingText
+									? `Showing only incomplete todos due on ${showingText}`
+									: 'Showing: All'
+						  }`
+						: `${
+								showingText
+									? `Showing all todos due on: ${showingText}`
+									: 'Showing: Only incomplete'
+						  }`}
+					<br />
+					{showIncompleteOnly
+						? 'Click to show all'
+						: 'Click to show only incomplete'}
+					<input
+						type='checkbox'
+						onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
+					/>
+				</label>
+				<div
+					className={`
+			all-todos-listed
+			${insideDayWithTodos ? 'inside-day-with-todos' : ''}
+			`}
+				>
+					{sortedByDueDate.map((todo) => {
+						const momentObjFromTodo = moment(todo.deadline);
+						return (
+							<TodoView
+								key={todo.id}
+								todoObj={todo}
+								toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+								deleteTodo={crudOperations.deleteTodo}
+								momentObjFromTodo={momentObjFromTodo}
+								beginEdit={handleTodoUpdate}
+							/>
+						);
+					})}
+				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

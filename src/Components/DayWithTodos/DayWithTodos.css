@@ -1,0 +1,4 @@
+.day-w-out-todos {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+}

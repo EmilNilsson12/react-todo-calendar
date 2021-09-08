@@ -87,15 +87,17 @@ function CalenderView({ todos, crudOperations }) {
 		return components;
 	};
 	return (
-		<>
+		<div className='calendar'>
 			<div className='month-view'>
-				<h2>
-					<i>
-						{momentObj.format('MMMM')} - {momentObj.format('YYYY')}
-					</i>
-				</h2>
-				<button onClick={prevMonth}>Prev month</button>
-				<button onClick={nextMonth}>Next month</button>
+				<div className='month-navigator'>
+					<button onClick={prevMonth}>Prev month</button>
+					<h2 className='current-month'>
+						<i>
+							{momentObj.format('MMMM')} - {momentObj.format('YYYY')}
+						</i>
+					</h2>
+					<button onClick={nextMonth}>Next month</button>
+				</div>
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
@@ -104,7 +106,7 @@ function CalenderView({ todos, crudOperations }) {
 				todos={todos}
 				crudOperations={crudOperations}
 			/>
-		</>
+		</div>
 	);
 }
 

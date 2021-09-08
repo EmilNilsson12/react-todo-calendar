@@ -12,23 +12,6 @@ function TodoForm({
 	updateParams,
 	setCurrentlyUpdating,
 }) {
-	useEffect(() => {
-		// Makes sure title input is in focus even when initiating an update
-		firstFocusInputElement.current.focus();
-
-		if (dayToShow) {
-			setInputDate(dayToShow);
-			setInputDateValue(dayToShow.toISOString().split('T')[0]);
-		}
-
-		if (updateParams) {
-			setInputTitle(updateParams.title);
-			setInputDesc(updateParams.description);
-			setInputDate(moment(updateParams.deadline));
-			setInputDateValue(updateParams.deadline.split('T')[0]);
-		}
-	}, [updateMode]);
-
 	const [inputTitle, setInputTitle] = useState('');
 	const [inputDesc, setInputDesc] = useState('');
 	const [inputDate, setInputDate] = useState(moment());
@@ -37,6 +20,27 @@ function TodoForm({
 	);
 
 	const firstFocusInputElement = useRef(null);
+
+	useEffect(() => {
+		console.log('Should run when clicking on any day!');
+		if (dayToShow) {
+			setInputDate(dayToShow);
+			setInputDateValue(dayToShow.toISOString().split('T')[0]);
+		}
+	});
+
+	useEffect(() => {
+		console.log('Should run when clicking on any day!');
+		// Makes sure title input is in focus even when initiating an update
+		firstFocusInputElement.current.focus();
+
+		if (updateParams) {
+			setInputTitle(updateParams.title);
+			setInputDesc(updateParams.description);
+			setInputDate(moment(updateParams.deadline));
+			setInputDateValue(updateParams.deadline.split('T')[0]);
+		}
+	}, [updateMode, dayToShow, inputDate]);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
