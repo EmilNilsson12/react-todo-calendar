@@ -10,12 +10,17 @@ function ListTodosView({ todos, crudOperations }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
+	const [showIncompleteOnly, toggleShowIncompleteOnly] = useState(false);
+
 	const handleTodoUpdate = (todoObj) => {
 		setCurrentlyUpdating(true);
 		setUpdateParams(todoObj);
 	};
 
-	const sortedByDueDate = [...todos.sort(compareByDates)];
+	let sortedByDueDate = [...todos.sort(compareByDates)];
+	if (showIncompleteOnly)
+		sortedByDueDate = [...sortedByDueDate.filter((todo) => !todo.completed)];
+	console.log(sortedByDueDate);
 	return currentlyUpdating ? (
 		<TodoForm
 			addTodo={crudOperations.addTodo}
@@ -28,6 +33,13 @@ function ListTodosView({ todos, crudOperations }) {
 	) : (
 		<>
 			<TodoForm addTodo={crudOperations.addTodo} defaultDate={moment()} />
+			<label>
+				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
+				<input
+					type='checkbox'
+					onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
+				/>
+			</label>
 			<div className='all-todos-listed'>
 				{sortedByDueDate.map((todo) => {
 					const momentObjFromTodo = moment(todo.deadline);
