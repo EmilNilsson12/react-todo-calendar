@@ -1,5 +1,29 @@
+.calendar {
+	display: grid;
+	grid-template-rows: 9fr 10fr;
+	/* height: 100vh; */
+}
+
+.calendar > * {
+	border: 2px dotted black;
+}
+
 .month-view {
 	background-color: rgba(255, 0, 0, 0.4);
+	display: grid;
+	grid-template-rows: 50px 25px auto;
+}
+
+.month-navigator {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.current-month {
+	margin: 0;
+	text-align: center;
+	width: 200px;
 }
 
 .grid-container {
@@ -21,7 +45,7 @@
 	background-color: rgba(0, 0, 255, 0.3);
 	gap: 5px;
 	padding: 3px;
-	height: 50vh;
+	/* height: 50vh; */
 }
 
 .day-div {

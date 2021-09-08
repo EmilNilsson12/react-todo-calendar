@@ -6,7 +6,7 @@ import './ListTodosView.css';
 import TodoForm from '../TodoForm/TodoForm';
 import TodoView from '../TodoView/TodoView';
 
-function ListTodosView({ todos, crudOperations }) {
+function ListTodosView({ todos, crudOperations, insideDayWithTodos }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
@@ -32,6 +32,17 @@ function ListTodosView({ todos, crudOperations }) {
 		/>
 	) : (
 		<div>
+			{insideDayWithTodos ? (
+				<span style={{ backgroundColor: 'yellow' }}>
+					inside day with todos
+					<br />
+				</span>
+			) : (
+				<span style={{ backgroundColor: 'yellow' }}>
+					on the side menu
+					<br />
+				</span>
+			)}
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
 				<br />
@@ -43,7 +54,12 @@ function ListTodosView({ todos, crudOperations }) {
 					onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
 				/>
 			</label>
-			<div className='all-todos-listed'>
+			<div
+				className={`
+			all-todos-listed
+			${insideDayWithTodos ? 'inside-day-with-todos' : ''}
+			`}
+			>
 				{sortedByDueDate.map((todo) => {
 					const momentObjFromTodo = moment(todo.deadline);
 					return (

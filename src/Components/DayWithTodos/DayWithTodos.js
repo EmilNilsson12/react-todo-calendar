@@ -38,6 +38,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 					<ListTodosView
 						todos={todosForThisDay}
 						crudOperations={crudOperations}
+						insideDayWithTodos={true}
 					/>
 				) : (
 					<i>No todos due this day...</i>

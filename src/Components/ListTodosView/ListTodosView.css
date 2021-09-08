@@ -1,4 +1,8 @@
 .all-todos-listed {
-	height: 70vh;
+	height: 90vh;
 	overflow-y: scroll;
+}
+
+.inside-day-with-todos {
+	height: 35vh;
 }
