@@ -11,6 +11,7 @@ function ListTodosView({
 	crudOperations,
 	insideDayWithTodos,
 	showingText,
+	dayToShow,
 }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
@@ -40,7 +41,11 @@ function ListTodosView({
 			${showingText ? 'testing-grid' : ''}
 		`}
 		>
-			{showingText ? <TodoForm addTodo={crudOperations.addTodo} /> : <></>}
+			{showingText ? (
+				<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
+			) : (
+				<></>
+			)}
 
 			<div
 				className={`${

@@ -36,6 +36,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 						crudOperations={crudOperations}
 						insideDayWithTodos={true}
 						showingText={dayToShow.format('D [of] MMMM, YYYY')}
+						dayToShow={dayToShow}
 					/>
 				) : (
 					<div className='day-w-out-todos'>

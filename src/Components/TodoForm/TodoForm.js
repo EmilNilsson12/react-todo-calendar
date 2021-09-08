@@ -28,6 +28,7 @@ function TodoForm({
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
 		}
 	});
+
 	useEffect(() => {
 		console.log('Should run when clicking on any day!');
 		// Makes sure title input is in focus even when initiating an update
