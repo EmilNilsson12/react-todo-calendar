@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import moment from 'moment';
-
-import TodoForm from '../TodoForm/TodoForm';
 
 import './TodoView.css';
 
 function TodoView({ todoObj, crudOperations, handleTodoUpdate }) {
 	const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
+
+	const handleCompleteTodo = () => {
+		crudOperations.toggleCompleteTodo(todoObj);
+	};
 
 	const handleUpdateTodo = () => {
 		handleTodoUpdate(todoObj);
@@ -43,6 +44,7 @@ function TodoView({ todoObj, crudOperations, handleTodoUpdate }) {
 					<>
 						<button onClick={handleDeleteTodo}>Delete</button>
 						<button onClick={handleUpdateTodo}>Update</button>
+						<button onClick={handleCompleteTodo}>Mark as complete</button>
 					</>
 				)}
 			</div>
