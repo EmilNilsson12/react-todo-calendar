@@ -2,3 +2,8 @@
 	display: grid;
 	grid-template-columns: 1fr 4fr;
 }
+
+.grid-day-with-todos {
+	display: grid;
+	grid-template-rows: 40px auto;
+}

@@ -30,7 +30,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	) : (
 		<div className='day-with-todos'>
 			<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
-			<div>
+			<div className='grid-day-with-todos'>
 				<h3>
 					Todos due on <u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 				</h3>

@@ -1,8 +1,7 @@
 .calendar {
 	display: grid;
-	grid-gap: 30px;
-	grid-template-rows: 9fr 10fr;
-	/* height: 100vh; */
+	/* grid-gap: 30px; */
+	grid-template-rows: 40vh 40vh;
 }
 
 .month-view {

@@ -1,12 +1,19 @@
 .list-todos-component {
 	display: grid;
-	grid-template-rows: auto 95vh;
+	grid-template-rows: auto 90vh;
 }
 
 .all-todos-listed {
+	height: 90vh;
 	overflow-y: scroll;
 }
 
+.list-todos-component-inside-day-with-todos {
+	display: grid;
+	grid-template-rows: 40px auto;
+	height: 40%;
+}
+
 .inside-day-with-todos {
-	height: 35vh;
+	height: 50vh;
 }

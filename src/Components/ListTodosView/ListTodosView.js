@@ -31,7 +31,13 @@ function ListTodosView({ todos, crudOperations, insideDayWithTodos }) {
 			setCurrentlyUpdating={setCurrentlyUpdating}
 		/>
 	) : (
-		<div className={`${insideDayWithTodos ? '' : 'list-todos-component'}`}>
+		<div
+			className={`${
+				insideDayWithTodos
+					? 'list-todos-component-inside-day-with-todos'
+					: 'list-todos-component'
+			}`}
+		>
 			<label>
 				{showIncompleteOnly ? 'Showing: Only incomplete' : 'Showing: All'}
 				<br />
