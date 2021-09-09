@@ -100,7 +100,7 @@ function getNumOfTodosDueThisDay(momentObj, todos, i) {
 	const compareDate = momentObj.clone().set('date', i).format('YYYY-MM-DD');
 
 	// Get number of todos for this day
-	let num = todos.filter(
+	const num = todos.filter(
 		(todo) => todo.deadline.split('T')[0] === compareDate
 	).length;
 
