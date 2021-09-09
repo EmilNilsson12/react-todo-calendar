@@ -15,23 +15,6 @@ function CalenderView({ todos, crudOperations }) {
 	// Today should only change when the user manually refreshes the page
 	const [today, setToday] = useState(momentObj.clone());
 
-	// const [currentViewDay, setCurrentViewDay] = useState();
-	// const [currentViewMonth, setCurrentViewMonth] = useState();
-	// const [currentViewYear, setCurrentViewYear] = useState();
-
-	const [daysInThisMonth, setDaysInThisMonth] = useState();
-
-	const updateStates = () => {};
-
-	// momentObj owns the state of which day is rendered
-	// all other states derive from momentObj
-	useEffect(() => {
-		// setCurrentViewDay(parseInt(momentObj.format('D'), 10));
-		// setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
-		// setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
-		setDaysInThisMonth(momentObj.daysInMonth());
-	}, [momentObj]);
-
 	useEffect(() => {
 		console.log('Test if react reacts to newMomentObj');
 	}, [momentObj]);
