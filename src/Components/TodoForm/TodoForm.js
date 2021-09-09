@@ -17,8 +17,6 @@ function TodoForm({
 	const [inputDate, setInputDate] = useState(dayToShow);
 	const [inputDateValue, setInputDateValue] = useState('');
 
-	const [dayToShowState, setDayToShowState] = useState(dayToShow);
-
 	const firstFocusInputElement = useRef(null);
 
 	// inputDate and inputDateValue should update when the form is mounted
@@ -31,7 +29,6 @@ function TodoForm({
 			setInputDate(dayToShow);
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
 		}
-		setDayToShowState(dayToShowState);
 	}, [dayToShow]);
 
 	useEffect(() => {
