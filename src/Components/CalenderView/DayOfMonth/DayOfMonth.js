@@ -1,6 +1,8 @@
-function DayOfMonth({ day, placeHolder, today, active, cbFunc, hasTodos }) {
+function DayOfMonth({ day, placeHolder, today, active, cbFunc, numOfTodos }) {
 	const generateNotches = () => {
-		let innerText = `This day has ${hasTodos} todo${hasTodos > 1 ? 's' : ''}`;
+		let innerText = `This day has ${numOfTodos} todo${
+			numOfTodos > 1 ? 's' : ''
+		}`;
 		return innerText;
 	};
 	return (
@@ -13,13 +15,13 @@ function DayOfMonth({ day, placeHolder, today, active, cbFunc, hasTodos }) {
 					className={`
 						${today ? 'today' : ''}
 						${active ? 'active-day' : ''}
-						${hasTodos ? 'has-todos' : ''}
+						${numOfTodos ? 'has-todos' : ''}
 						day-div
 						grid-child
 					`}
 					onClick={cbFunc}
 				>
-					{hasTodos ? (
+					{numOfTodos ? (
 						<div className='notch-container'>{generateNotches()}</div>
 					) : (
 						<> </>

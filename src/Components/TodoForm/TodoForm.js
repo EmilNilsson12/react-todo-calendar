@@ -19,18 +19,26 @@ function TodoForm({
 		moment().toISOString().split('T')[0]
 	);
 
+	const [dayToShowState, setDayToShowState] = useState(dayToShow);
+
 	const firstFocusInputElement = useRef(null);
 
+	// inputDate and inputDateValue should update when the form is mounted
+	// and when dayToShow is updated
+
+	// dayToShow needs to be anything other than an object
+
 	useEffect(() => {
-		console.log('Should run when clicking on any day!');
+		// console.log('Should run when clicking on any day!');
 		if (dayToShow) {
 			setInputDate(dayToShow);
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
 		}
+		setDayToShowState(dayToShowState);
 	});
 
 	useEffect(() => {
-		console.log('Should run when clicking on any day!');
+		// console.log('Should run when clicking on any day!');
 		// Makes sure title input is in focus even when initiating an update
 		firstFocusInputElement.current.focus();
 
