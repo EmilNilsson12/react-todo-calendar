@@ -116,18 +116,3 @@ function itIsToday(todayObj, todayAsInt) {
 	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
 	return todayFormatted === todayAsInt;
 }
-
-function formatDate(year, month, day) {
-	// If month.toString.length = 1
-	// add leading 0
-	let monthAsString = month.toString();
-	if (monthAsString.length === 1) monthAsString = '0' + monthAsString;
-
-	// If day.toString.length = 1
-	// add leading 0
-	let dayAsString = day.toString();
-	if (dayAsString.length === 1) dayAsString = '0' + dayAsString;
-
-	const formatted = `${year}-${monthAsString}-${dayAsString}`;
-	return formatted;
-}
