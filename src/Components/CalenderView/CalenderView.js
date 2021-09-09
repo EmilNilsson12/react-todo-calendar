@@ -14,24 +14,37 @@ function CalenderView({ todos, crudOperations }) {
 	// Today should only change when the user manually refreshes the page
 	const [today, setToday] = useState(moment());
 	const [currentTime, setCurrentTime] = useState(
-		today.toISOString().split('T')[1].split('.')[0]
+		today.toString().split(' ')[4]
 	);
+	console.log('today: ', today.toString());
 	console.log('today: ', today.toISOString());
 	console.log('currentTime: ', currentTime);
 
 	useEffect(() => {
-		// setCurrentTime(momentObj.toISOString().split('T')[1]);
+		setCurrentTime(momentObj.toString().split(' ')[4]);
 		console.log('Shoudl be shown when click AND when switching month');
-		console.log('momentObj: ', momentObj.toISOString());
+		console.log('momentObj: ', momentObj.toString());
 	}, [momentObj]);
 
 	const prevMonth = () => {
-		const newMomentObj = momentObj.clone().subtract(1, 'M');
+		const dateComponent = momentObj
+			.clone()
+			.subtract(1, 'M')
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
 		setMomentObject(newMomentObj);
 	};
 
 	const nextMonth = () => {
-		const newMomentObj = momentObj.clone().add(1, 'M');
+		const dateComponent = momentObj
+			.clone()
+			.add(1, 'M')
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
 		setMomentObject(newMomentObj);
 	};
 
