@@ -6,17 +6,23 @@ import './CalenderView.css';
 import WeekDays from './WeekDays/WeekDays';
 import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
+console.log('now: ', moment().toISOString());
+
 function CalenderView({ todos, crudOperations }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
-	const [currentTime, setCurrentTime] = useState(
-		momentObj.toISOString().split('T')[1]
-	);
 
 	// Today should only change when the user manually refreshes the page
-	const [today, setToday] = useState(momentObj.clone());
+	const [today, setToday] = useState(moment());
+	const [currentTime, setCurrentTime] = useState(
+		today.toISOString().split('T')[1].split('.')[0]
+	);
+	console.log('today: ', today.toISOString());
+	console.log('currentTime: ', currentTime);
 
 	useEffect(() => {
-		console.log('Test if react reacts to newMomentObj');
+		// setCurrentTime(momentObj.toISOString().split('T')[1]);
+		console.log('Shoudl be shown when click AND when switching month');
+		console.log('momentObj: ', momentObj.toISOString());
 	}, [momentObj]);
 
 	const prevMonth = () => {
@@ -39,7 +45,13 @@ function CalenderView({ todos, crudOperations }) {
 			clickedDate = parseInt(target.id.split('|')[0]);
 		}
 
-		const newMomentObj = momentObj.clone().date(clickedDate);
+		const dateComponent = momentObj
+			.clone()
+			.date(clickedDate)
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
 		setMomentObject(newMomentObj);
 	};
 
