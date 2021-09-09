@@ -14,10 +14,8 @@ function TodoForm({
 }) {
 	const [inputTitle, setInputTitle] = useState('');
 	const [inputDesc, setInputDesc] = useState('');
-	const [inputDate, setInputDate] = useState(moment());
-	const [inputDateValue, setInputDateValue] = useState(
-		moment().toISOString().split('T')[0]
-	);
+	const [inputDate, setInputDate] = useState(dayToShow);
+	const [inputDateValue, setInputDateValue] = useState('');
 
 	const [dayToShowState, setDayToShowState] = useState(dayToShow);
 
@@ -43,8 +41,6 @@ function TodoForm({
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
-			// setInputDate(moment(updateParams.deadline));
-			// setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
 	}, [updateMode]);
 
@@ -81,8 +77,6 @@ function TodoForm({
 
 		setInputTitle('');
 		setInputDesc('');
-		setInputDate(moment());
-		setInputDateValue(moment().toISOString().split('T')[0]);
 
 		// Focus on Title
 		firstFocusInputElement.current.focus();
