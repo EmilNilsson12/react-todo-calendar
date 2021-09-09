@@ -38,7 +38,6 @@ function TodoForm({
 	});
 
 	useEffect(() => {
-		// console.log('Should run when clicking on any day!');
 		// Makes sure title input is in focus even when initiating an update
 		firstFocusInputElement.current.focus();
 
@@ -53,6 +52,9 @@ function TodoForm({
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 
+		// Get current timestamp
+		const newTimeComponent = moment().toISOString().split('T')[1];
+
 		if (updateMode) {
 			setCurrentlyUpdating(false);
 
@@ -60,14 +62,20 @@ function TodoForm({
 			updateTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate
+					.toISOString()
+					.split('T')[0]
+					.concat('T', newTimeComponent),
 				id: updateParams.id,
 			});
 		} else {
 			addTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate
+					.toISOString()
+					.split('T')[0]
+					.concat('T', newTimeComponent),
 				id: uuidv4(),
 			});
 		}
