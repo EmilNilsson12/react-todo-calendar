@@ -20,12 +20,12 @@ function CalenderView({ todos, crudOperations }) {
 	}, [momentObj]);
 
 	const prevMonth = () => {
-		let newMomentObj = momentObj.subtract(1, 'M').clone();
+		const newMomentObj = momentObj.clone().subtract(1, 'M');
 		setMomentObject(newMomentObj);
 	};
 
 	const nextMonth = () => {
-		let newMomentObj = momentObj.add(1, 'M').clone();
+		const newMomentObj = momentObj.clone().add(1, 'M');
 		setMomentObject(newMomentObj);
 	};
 
@@ -39,7 +39,7 @@ function CalenderView({ todos, crudOperations }) {
 			clickedDate = parseInt(target.id.split('|')[0]);
 		}
 
-		let newMomentObj = momentObj.date(clickedDate).clone();
+		const newMomentObj = momentObj.clone().date(clickedDate);
 		setMomentObject(newMomentObj);
 	};
 
@@ -112,8 +112,8 @@ function itIsActive(momentObj, activeDayAsInt) {
 	return todayFormatted === activeDayAsInt;
 }
 
-function itIsToday(today, todayAsInt) {
-	const todayFormatted = parseInt(today.clone().format('D'), 10);
+function itIsToday(todayObj, todayAsInt) {
+	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
 	return todayFormatted === todayAsInt;
 }
 
