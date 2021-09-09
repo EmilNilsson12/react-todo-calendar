@@ -8,37 +8,37 @@ import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
 function CalenderView({ todos, crudOperations }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
-	const [today, setToday] = useState(momentObj.clone());
 
-	const [currentViewDay, setCurrentViewDay] = useState();
-	const [currentViewMonth, setCurrentViewMonth] = useState();
-	const [currentViewYear, setCurrentViewYear] = useState();
+	// Today should only change when the user manually refreshes the page
+	const [today, setToday] = useState(moment());
+	const [currentTime, setCurrentTime] = useState(
+		today.toString().split(' ')[4]
+	);
 
-	const [daysInThisMonth, setDaysInThisMonth] = useState();
-
-	// console.log('currentDayInFocus: ', currentDayInFocus);
-
-	const updateStates = () => {
-		setCurrentViewDay(parseInt(momentObj.format('D'), 10));
-		setCurrentViewMonth(parseInt(momentObj.format('M'), 10));
-		setCurrentViewYear(parseInt(momentObj.format('YYYY'), 10));
-		setDaysInThisMonth(momentObj.daysInMonth());
-	};
-
-	// Only fired once since momentObj is only ever mutated, never re-assigned
-	// Basically componentDidMount
 	useEffect(() => {
-		updateStates();
-	}, []);
+		setCurrentTime(momentObj.toString().split(' ')[4]);
+	}, [momentObj]);
 
 	const prevMonth = () => {
-		momentObj.subtract(1, 'M');
-		updateStates();
+		const dateComponent = momentObj
+			.clone()
+			.subtract(1, 'M')
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
+		setMomentObject(newMomentObj);
 	};
 
 	const nextMonth = () => {
-		momentObj.add(1, 'M');
-		updateStates();
+		const dateComponent = momentObj
+			.clone()
+			.add(1, 'M')
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
+		setMomentObject(newMomentObj);
 	};
 
 	const dateClicked = ({ target }) => {
@@ -50,8 +50,15 @@ function CalenderView({ todos, crudOperations }) {
 		} else {
 			clickedDate = parseInt(target.id.split('|')[0]);
 		}
-		setCurrentViewDay(clickedDate);
-		momentObj.date(clickedDate);
+
+		const dateComponent = momentObj
+			.clone()
+			.date(clickedDate)
+			.toISOString()
+			.split('T')[0];
+
+		const newMomentObj = moment(dateComponent + 'T' + currentTime);
+		setMomentObject(newMomentObj);
 	};
 
 	const renderDays = () => {
@@ -65,22 +72,17 @@ function CalenderView({ todos, crudOperations }) {
 			);
 		}
 
-		for (let i = 1; i <= daysInThisMonth; i++) {
+		for (let i = 1; i <= momentObj.daysInMonth(); i++) {
 			components.push(
 				<DayOfMonth
 					key={`Day ${i} of month`}
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
-					today={itIsToday(today, currentViewMonth, currentViewYear, i)}
-					active={itIsActive(currentViewDay, i)}
+					today={itIsToday(today, i)}
+					active={itIsActive(momentObj, i)}
 					cbFunc={dateClicked}
-					hasTodos={checkIfDayHasTodos(
-						currentViewMonth,
-						currentViewYear,
-						i,
-						todos
-					)}
+					numOfTodos={getNumOfTodosDueThisDay(momentObj, todos, i)}
 				/>
 			);
 		}
@@ -112,63 +114,23 @@ function CalenderView({ todos, crudOperations }) {
 
 export default CalenderView;
 
-function checkIfDayHasTodos(
-	currentViewMonth,
-	currentViewYear,
-	currentIterationDay,
-	todos
-) {
-	const formattedParam = formatDate(
-		currentViewYear,
-		currentViewMonth,
-		currentIterationDay
-	);
-	const compareDate = moment(formattedParam).format('YYYY-MM-DD');
+function getNumOfTodosDueThisDay(momentObj, todos, i) {
+	const compareDate = momentObj.clone().set('date', i).format('YYYY-MM-DD');
 
-	let numOfDeadlinesOnThisDate = 0;
-	todos.forEach((todo) => {
-		const thisDayHasDeadlines = todo.deadline.split('T')[0] === compareDate;
-		if (thisDayHasDeadlines) {
-			numOfDeadlinesOnThisDate++;
-		}
-	});
+	// Get number of todos for this day
+	const num = todos.filter(
+		(todo) => todo.deadline.split('T')[0] === compareDate
+	).length;
 
-	return numOfDeadlinesOnThisDate;
+	return num;
 }
 
-function itIsActive(currentViewDay, activeDayAsInt) {
-	return activeDayAsInt === currentViewDay;
+function itIsActive(momentObj, activeDayAsInt) {
+	const activeDayFormatted = parseInt(momentObj.clone().format('D'), 10);
+	return activeDayFormatted === activeDayAsInt;
 }
 
-function itIsToday(
-	momentObjToday,
-	currentViewMonth,
-	currentViewYear,
-	todayAsInt
-) {
-	// Check if today is in the currentViewMonth
-	const todayDateAsInt = parseInt(momentObjToday.format('D'), 10);
-	const todayMonthAsInt = parseInt(momentObjToday.format('M'), 10);
-	const todayYearAsInt = parseInt(momentObjToday.format('YYYY'), 10);
-
-	const correctMonth = todayMonthAsInt === currentViewMonth;
-	const correctYear = todayYearAsInt === currentViewYear;
-	const correctDay = todayDateAsInt === todayAsInt;
-
-	return correctMonth && correctYear && correctDay;
-}
-
-function formatDate(year, month, day) {
-	// If month.toString.length = 1
-	// add leading 0
-	let monthAsString = month.toString();
-	if (monthAsString.length === 1) monthAsString = '0' + monthAsString;
-
-	// If day.toString.length = 1
-	// add leading 0
-	let dayAsString = day.toString();
-	if (dayAsString.length === 1) dayAsString = '0' + dayAsString;
-
-	const formatted = `${year}-${monthAsString}-${dayAsString}`;
-	return formatted;
+function itIsToday(todayObj, todayAsInt) {
+	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
+	return todayFormatted === todayAsInt;
 }

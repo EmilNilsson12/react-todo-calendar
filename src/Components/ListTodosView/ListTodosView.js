@@ -26,7 +26,6 @@ function ListTodosView({
 	let sortedByDueDate = [...todos.sort(compareByDates)];
 	if (showIncompleteOnly)
 		sortedByDueDate = [...sortedByDueDate.filter((todo) => !todo.completed)];
-	console.log(sortedByDueDate);
 	return currentlyUpdating ? (
 		<TodoForm
 			addTodo={crudOperations.addTodo}
@@ -34,6 +33,7 @@ function ListTodosView({
 			updateParams={updateParams}
 			updateMode={true}
 			setCurrentlyUpdating={setCurrentlyUpdating}
+			dayToShow={moment(updateParams.deadline)}
 		/>
 	) : (
 		<div

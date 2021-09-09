@@ -66,7 +66,6 @@ export default App;
 function customHookSetTodos(array, hookCallback, object) {
 	// Add new version of object to array
 	// unless object is missing
-	console.log('Object: ', object);
 	if (object) array.push(object);
 
 	// Replace todos with copyOfTodos

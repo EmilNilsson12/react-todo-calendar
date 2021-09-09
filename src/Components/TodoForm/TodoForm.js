@@ -19,31 +19,40 @@ function TodoForm({
 		moment().toISOString().split('T')[0]
 	);
 
+	const [dayToShowState, setDayToShowState] = useState(dayToShow);
+
 	const firstFocusInputElement = useRef(null);
 
+	// inputDate and inputDateValue should update when the form is mounted
+	// and when dayToShow is updated
+
+	// dayToShow needs to be anything other than an object
+
 	useEffect(() => {
-		console.log('Should run when clicking on any day!');
 		if (dayToShow) {
 			setInputDate(dayToShow);
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
 		}
-	});
+		setDayToShowState(dayToShowState);
+	}, [dayToShow]);
 
 	useEffect(() => {
-		console.log('Should run when clicking on any day!');
 		// Makes sure title input is in focus even when initiating an update
 		firstFocusInputElement.current.focus();
 
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
-			setInputDate(moment(updateParams.deadline));
-			setInputDateValue(updateParams.deadline.split('T')[0]);
+			// setInputDate(moment(updateParams.deadline));
+			// setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
-	}, [updateMode, dayToShow, inputDate]);
+	}, [updateMode]);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
+
+		// Get current timestamp
+		const newTimeComponent = moment().toISOString().split('T')[1];
 
 		if (updateMode) {
 			setCurrentlyUpdating(false);
@@ -52,14 +61,20 @@ function TodoForm({
 			updateTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate
+					.toISOString()
+					.split('T')[0]
+					.concat('T', newTimeComponent),
 				id: updateParams.id,
 			});
 		} else {
 			addTodo({
 				title: inputTitle,
 				description: inputDesc,
-				deadline: inputDate.toISOString(),
+				deadline: inputDate
+					.toISOString()
+					.split('T')[0]
+					.concat('T', newTimeComponent),
 				id: uuidv4(),
 			});
 		}
