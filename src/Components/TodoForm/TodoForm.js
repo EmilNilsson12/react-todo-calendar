@@ -29,7 +29,6 @@ function TodoForm({
 	// dayToShow needs to be anything other than an object
 
 	useEffect(() => {
-		// console.log('Should run when clicking on any day!');
 		if (dayToShow) {
 			setInputDate(dayToShow);
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
