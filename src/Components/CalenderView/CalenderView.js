@@ -6,8 +6,6 @@ import './CalenderView.css';
 import WeekDays from './WeekDays/WeekDays';
 import DayWithTodos from '../DayWithTodos/DayWithTodos';
 
-console.log('now: ', moment().toISOString());
-
 function CalenderView({ todos, crudOperations }) {
 	const [momentObj, setMomentObject] = useState(() => moment());
 
@@ -16,14 +14,9 @@ function CalenderView({ todos, crudOperations }) {
 	const [currentTime, setCurrentTime] = useState(
 		today.toString().split(' ')[4]
 	);
-	console.log('today: ', today.toString());
-	console.log('today: ', today.toISOString());
-	console.log('currentTime: ', currentTime);
 
 	useEffect(() => {
 		setCurrentTime(momentObj.toString().split(' ')[4]);
-		console.log('Shoudl be shown when click AND when switching month');
-		console.log('momentObj: ', momentObj.toString());
 	}, [momentObj]);
 
 	const prevMonth = () => {
