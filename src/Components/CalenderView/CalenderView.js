@@ -108,8 +108,8 @@ function getNumOfTodosDueThisDay(momentObj, todos, i) {
 }
 
 function itIsActive(momentObj, activeDayAsInt) {
-	const todayFormatted = parseInt(momentObj.clone().format('D'), 10);
-	return todayFormatted === activeDayAsInt;
+	const activeDayFormatted = parseInt(momentObj.clone().format('D'), 10);
+	return activeDayFormatted === activeDayAsInt;
 }
 
 function itIsToday(todayObj, todayAsInt) {
