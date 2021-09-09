@@ -4,6 +4,8 @@ import CalenderView from './Components/CalenderView/CalenderView';
 import ListTodosView from './Components/ListTodosView/ListTodosView';
 
 function App() {
+	// Todos is parsed from localStorage
+	// or declared as an empty array
 	const [todos, setTodos] = useState(
 		JSON.parse(localStorage.getItem('todos')) || []
 	);
@@ -14,47 +16,40 @@ function App() {
 
 	const crudOperations = {
 		addTodo: (todoObj) => {
+			// Make copy of todos array
 			const copyOfTodos = [...todos];
-			copyOfTodos.push(todoObj);
-			setTodos(copyOfTodos);
+
+			customHookSetTodos(copyOfTodos, setTodos, todoObj);
 		},
 		deleteTodo: (id) => {
-			// Make copy of todos
-			// Filter out the deleted todo
+			// Make copy of todos array
+			// and filter out the deleted todo
 			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
 
-			// Replace old todos with copy
-			setTodos(copyOfTodos);
+			// Replace todos with copyOfTodos
+			customHookSetTodos(copyOfTodos, setTodos);
 		},
 		toggleCompleteTodo: ({ id }) => {
-			// Make copy of todos
-			// Filter out the completed todo
-			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
-
-			// Find relevant entry
+			// Find relevant entry from saved todos
 			const todoToBeUpdated = todos.find((todo) => todo.id === id);
 
-			// Update key completed to opposite of inital value
+			// Update completed-property to opposite of its inital value
 			todoToBeUpdated.completed = !todoToBeUpdated.completed;
 
-			// Add new version of updated todo to todos
-			copyOfTodos.push(todoToBeUpdated);
+			// Make copy of todos array
+			// and filter out the deleted todo
+			const copyOfTodos = [...todos].filter((todo) => todo.id !== id);
 
-			// Replace old todos with copy
-			setTodos(copyOfTodos);
+			customHookSetTodos(copyOfTodos, setTodos, todoToBeUpdated);
 		},
 		updateTodo: (updatedTodoObj) => {
-			// Make copy of todos
-			// Filter out the updated todo
+			// Make copy of todos array
+			// and filter out the deleted todo
 			const copyOfTodos = [...todos].filter(
 				(todo) => todo.id !== updatedTodoObj.id
 			);
 
-			// Add new version of updated todo to todos
-			copyOfTodos.push(updatedTodoObj);
-
-			// Replace old todos with copy
-			setTodos(copyOfTodos);
+			customHookSetTodos(copyOfTodos, setTodos, updatedTodoObj);
 		},
 	};
 
@@ -67,3 +62,13 @@ function App() {
 }
 
 export default App;
+
+function customHookSetTodos(array, hookCallback, object) {
+	// Add new version of object to array
+	// unless object is missing
+	console.log('Object: ', object);
+	if (object) array.push(object);
+
+	// Replace todos with copyOfTodos
+	hookCallback(array);
+}
