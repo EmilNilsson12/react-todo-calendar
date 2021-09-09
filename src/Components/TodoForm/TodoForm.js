@@ -34,7 +34,7 @@ function TodoForm({
 			setInputDateValue(dayToShow.toISOString().split('T')[0]);
 		}
 		setDayToShowState(dayToShowState);
-	});
+	}, [dayToShow]);
 
 	useEffect(() => {
 		// Makes sure title input is in focus even when initiating an update
@@ -43,10 +43,10 @@ function TodoForm({
 		if (updateParams) {
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
-			setInputDate(moment(updateParams.deadline));
-			setInputDateValue(updateParams.deadline.split('T')[0]);
+			// setInputDate(moment(updateParams.deadline));
+			// setInputDateValue(updateParams.deadline.split('T')[0]);
 		}
-	}, [updateMode, dayToShow, inputDate]);
+	}, [updateMode]);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();

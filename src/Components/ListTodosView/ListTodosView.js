@@ -33,6 +33,7 @@ function ListTodosView({
 			updateParams={updateParams}
 			updateMode={true}
 			setCurrentlyUpdating={setCurrentlyUpdating}
+			dayToShow={moment(updateParams.deadline)}
 		/>
 	) : (
 		<div
