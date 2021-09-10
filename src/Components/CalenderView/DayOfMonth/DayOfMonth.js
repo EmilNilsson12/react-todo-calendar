@@ -5,7 +5,7 @@ function DayOfMonth({
 	active,
 	cbFunc,
 	numOfTodos,
-	holiday,
+	dayValues,
 }) {
 	const generateNotches = () => {
 		let innerText = `This day has ${numOfTodos} todo${
@@ -15,8 +15,7 @@ function DayOfMonth({
 	};
 
 	if (!placeHolder) {
-		console.log(day);
-		console.log(holiday);
+		// console.table(dayValues.namnsdag);
 	}
 	return (
 		<>
@@ -29,7 +28,7 @@ function DayOfMonth({
 						${today ? 'today' : ''}
 						${active ? 'active-day' : ''}
 						${numOfTodos ? 'has-todos' : ''}
-						${holiday ? 'is-holiday' : ''}
+						${isHoliday(dayValues) ? 'is-holiday' : ''}
 						day-div
 						grid-child
 					`}
@@ -48,3 +47,7 @@ function DayOfMonth({
 }
 
 export default DayOfMonth;
+
+function isHoliday(dayValues) {
+	return dayValues['röd dag'] === 'Ja' || dayValues['arbetsfri dag'] === 'Ja';
+}
