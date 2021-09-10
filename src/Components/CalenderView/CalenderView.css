@@ -82,15 +82,49 @@
 }
 
 .is-holiday {
-	background-color: rgba(255, 0, 0, 0.3);
+	background-color: #ff0000;
 }
 
 .is-flag-day {
 	background-color: yellow;
 	color: blue;
 }
+
+.is-flag-day.has-todos {
+	background-color: blue;
+	color: yellow;
+}
+
+.is-flag-day.is-holiday.has-todos {
+	background-color: blue;
+	color: yellow;
+}
+
+.is-flag-day.is-holiday.has-todos.all-todos-done {
+	color: black;
+}
+
+.is-flag-day.has-todos.all-todos-done {
+	color: yellow;
+	background: linear-gradient(
+		-325deg,
+		rgba(0, 255, 0, 0.7) 0%,
+		rgba(0, 255, 0, 0.7) 10%,
+		blue 30%,
+		blue 100%
+	);
+}
+
+.is-flag-day.is-holiday.has-todos.all-todos-done .date-num {
+	color: black;
+}
+
 .is-flag-day .date-num {
 	font-weight: bold;
+}
+
+.is-flag-day.has-todos .date-num {
+	color: yellow;
 }
 
 .is-flag-day .date-num::before {
@@ -99,7 +133,7 @@
 }
 
 .has-todos {
-	background-color: rgba(0, 255, 0, 0.3);
+	background-color: #3f7900;
 }
 
 .has-todos .date-num {
@@ -107,5 +141,26 @@
 }
 
 .all-todos-done {
-	background-color: rgba(0, 255, 0, 0.7);
+	background-color: rgba(0, 255, 0, 1);
+	color: black;
+}
+
+.is-holiday.has-todos.all-todos-done {
+	background: linear-gradient(
+		-45deg,
+		rgba(255, 0, 0, 1) 0%,
+		rgba(255, 0, 0, 1) 20%,
+		rgba(0, 255, 0, 1) 30%,
+		rgba(0, 255, 0, 1) 100%
+	);
+}
+
+.is-holiday.has-todos {
+	background: linear-gradient(
+		-45deg,
+		rgba(255, 0, 0, 1) 0%,
+		rgba(255, 0, 0, 1) 10%,
+		rgba(63, 121, 0, 1) 50%,
+		rgba(63, 121, 0, 1) 100%
+	);
 }
