@@ -112,6 +112,7 @@ function CalenderView({ todos, crudOperations }) {
 					active={itIsActive(momentObj, i)}
 					cbFunc={dateClicked}
 					numOfTodos={getNumOfTodosDueThisDay(momentObj, todos, i)}
+					redDay={isAHoliday(momentObj, i)}
 				/>
 			);
 		}
@@ -162,4 +163,22 @@ function itIsActive(momentObj, activeDayAsInt) {
 function itIsToday(todayObj, todayAsInt) {
 	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
 	return todayFormatted === todayAsInt;
+}
+
+function isAHoliday(momentObj, dayAsInt) {
+	const yearNum = momentObj.format('YYYY').toString();
+	const monthNum = momentObj.format('MM').toString();
+
+	// Find object in array for current year
+	const dayInArray = JSON.parse(
+		localStorage.getItem(`year-${yearNum}-holidays`)
+	).find((day) => day.datum === `${yearNum}-${monthNum}-${dayAsInt}`);
+
+	// Ignore undefined days
+	if (dayInArray) {
+		const isHoliday = dayInArray['röd dag'];
+		return isHoliday ? true : false;
+	} else {
+		return false;
+	}
 }
