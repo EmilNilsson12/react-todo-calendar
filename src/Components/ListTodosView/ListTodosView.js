@@ -11,7 +11,7 @@ function ListTodosView({
 	crudOperations,
 	insideDayWithTodos,
 	dayToShow,
-	hiddenByDefault: hideDoneTodosByDefault,
+	hideDoneTodosByDefault,
 }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
