@@ -29,6 +29,7 @@ function DayOfMonth({
 						${active ? 'active-day' : ''}
 						${numOfTodos ? 'has-todos' : ''}
 						${isHoliday(dayValues) ? 'is-holiday' : ''}
+						${isFlagDay(dayValues) ? 'is-flag-day' : ''}
 						day-div
 						grid-child
 					`}
@@ -50,4 +51,8 @@ export default DayOfMonth;
 
 function isHoliday(dayValues) {
 	return dayValues['röd dag'] === 'Ja' || dayValues['arbetsfri dag'] === 'Ja';
+}
+
+function isFlagDay(dayValues) {
+	return dayValues['flaggdag'] !== '';
 }

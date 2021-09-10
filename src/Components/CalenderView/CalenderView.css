@@ -56,10 +56,6 @@
 	user-select: none;
 }
 
-.is-holiday {
-	background-color: rgba(255, 0, 0, 0.3);
-}
-
 .has-todos {
 	background-color: rgba(0, 255, 0, 0.3);
 }
@@ -83,9 +79,28 @@
 }
 
 .today {
-	background-color: rgb(0, 0, 255);
+	border: 4px dashed rgb(0, 0, 0);
 }
 
+.today .date-num::before {
+	content: 'Today! ';
+}
 .active-day {
 	outline: 2px dashed white;
+}
+
+.is-holiday {
+	background-color: rgba(255, 0, 0, 0.3);
+}
+
+.is-flag-day {
+	background-color: yellow;
+	color: blue;
+}
+.is-flag-day .date-num {
+	font-weight: bold;
+}
+.is-flag-day .date-num::before {
+	font-size: 14px;
+	content: 'Flaggdag! ';
 }
