@@ -10,9 +10,15 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 
 	return (
 		<div className='day-with-todos'>
-			<p>
-				Idag har <u>{dayValues.namnsdag.join(' och ')}</u> namnsdag!
-			</p>
+			<p>{dayToShow.format('D [of] MMMM, YYYY')}</p>
+
+			{dayValues.namnsdag.length ? (
+				<p>
+					Idag har <u>{dayValues.namnsdag.join(' och ')}</u> namnsdag!
+				</p>
+			) : (
+				<></>
+			)}
 			{dayValues['flaggdag'] !== '' ? (
 				<p>
 					Hissa flaggan för idag är det: <u>{dayValues['flaggdag']}</u>
@@ -34,7 +40,6 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 						<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 						<div>
 							<i>No todos due this day...</i>{' '}
-							<u>{dayToShow.format('D [of] MMMM, YYYY')}</u>
 							<p>Use the form to add a new todo on this day!</p>
 						</div>
 					</div>
