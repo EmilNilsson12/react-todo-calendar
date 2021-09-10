@@ -13,11 +13,6 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
-	const handleTodoUpdate = (todoObj) => {
-		setCurrentlyUpdating(true);
-		setUpdateParams(todoObj);
-	};
-
 	return currentlyUpdating ? (
 		<TodoForm
 			addTodo={crudOperations.addTodo}
