@@ -39,7 +39,7 @@ function TodoForm({
 			setInputTitle(updateParams.title);
 			setInputDesc(updateParams.description);
 		}
-	}, [updateMode]);
+	}, [updateMode, updateParams]);
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();

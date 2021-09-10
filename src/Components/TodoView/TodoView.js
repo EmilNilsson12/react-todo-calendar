@@ -35,8 +35,7 @@ function TodoView({ todoObj, toggleCompleteTodo, deleteTodo, beginEdit }) {
 		>
 			<div>
 				<h4>{todoObj.title}</h4>
-				<p>{todoObj.description}</p>
-				<span>{todoObj.dateAdded}</span>
+				{todoObj.description ? <p>{todoObj.description}</p> : <></>}
 			</div>
 			<div className='todo-btns'>
 				{confirmDeleteVisible ? (

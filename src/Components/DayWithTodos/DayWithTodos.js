@@ -1,34 +1,25 @@
-import { useState } from 'react';
-
 import './DayWithTodos.css';
 
 import TodoForm from '../TodoForm/TodoForm';
 import ListTodosView from '../ListTodosView/ListTodosView';
 
-function DayWithTodos({ dayToShow, todos, crudOperations }) {
+function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 	const todosForThisDay = todos.filter((todo) =>
 		dayToShow.isSame(todo.deadline, 'date')
 	);
 
-	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
-	const [updateParams, setUpdateParams] = useState({});
-
-	const handleTodoUpdate = (todoObj) => {
-		setCurrentlyUpdating(true);
-		setUpdateParams(todoObj);
-	};
-
-	return currentlyUpdating ? (
-		<TodoForm
-			addTodo={crudOperations.addTodo}
-			updateTodo={crudOperations.updateTodo}
-			updateParams={updateParams}
-			updateMode={true}
-			setCurrentlyUpdating={setCurrentlyUpdating}
-			dayToShow={dayToShow}
-		/>
-	) : (
+	return (
 		<div className='day-with-todos'>
+			<p>
+				Idag har <u>{dayValues.namnsdag.join(' och ')}</u> namnsdag!
+			</p>
+			{dayValues['flaggdag'] !== '' ? (
+				<p>
+					Hissa flaggan för idag är det: <u>{dayValues['flaggdag']}</u>
+				</p>
+			) : (
+				<></>
+			)}
 			<div className='grid-day-with-todos'>
 				{todosForThisDay.length > 0 ? (
 					<ListTodosView

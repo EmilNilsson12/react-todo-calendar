@@ -15,6 +15,43 @@ function CalenderView({ todos, crudOperations }) {
 		today.toString().split(' ')[4]
 	);
 
+	const [currentYear, setCurrentYear] = useState(
+		momentObj.clone().format('YYYY')
+	);
+
+	const [loadingState, setLoadingState] = useState(true);
+
+	useEffect(() => {
+		async function fetchData() {
+			// Only update state if the calendar shows a new year
+			if (currentYear !== momentObj.clone().format('YYYY')) {
+				setCurrentYear(momentObj.clone().format('YYYY'));
+			}
+
+			// Make sure to only fetch from the API once a year
+			if (!localStorage.getItem(`year-${currentYear}`)) {
+				// Add the current year to LS to prevent multiple fetches for the same year
+				localStorage.setItem(`year-${currentYear}`, currentYear);
+
+				await fetch(`http://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
+					.then((res) => {
+						return res.json();
+					})
+					.then(async (data) => {
+						// Add the fetched holidays to LS
+						await localStorage.setItem(
+							`year-${currentYear}-holidays`,
+							JSON.stringify(data.dagar)
+						);
+						setLoadingState(false);
+					});
+			} else {
+				setLoadingState(false);
+			}
+		}
+		fetchData();
+	}, [currentYear, momentObj]);
+
 	useEffect(() => {
 		setCurrentTime(momentObj.toString().split(' ')[4]);
 	}, [momentObj]);
@@ -79,10 +116,11 @@ function CalenderView({ todos, crudOperations }) {
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
-					today={itIsToday(today, i)}
+					today={itIsToday(today, momentObj, i)}
 					active={itIsActive(momentObj, i)}
 					cbFunc={dateClicked}
 					numOfTodos={getNumOfTodosDueThisDay(momentObj, todos, i)}
+					dayValues={getDayObject(momentObj, i)}
 				/>
 			);
 		}
@@ -103,11 +141,17 @@ function CalenderView({ todos, crudOperations }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos
-				dayToShow={momentObj}
-				todos={todos}
-				crudOperations={crudOperations}
-			/>
+
+			{loadingState === false ? (
+				<DayWithTodos
+					dayToShow={momentObj}
+					todos={todos}
+					crudOperations={crudOperations}
+					dayValues={getDayObject(momentObj, 0)}
+				/>
+			) : (
+				<p>Loading...</p>
+			)}
 		</div>
 	);
 }
@@ -117,12 +161,19 @@ export default CalenderView;
 function getNumOfTodosDueThisDay(momentObj, todos, i) {
 	const compareDate = momentObj.clone().set('date', i).format('YYYY-MM-DD');
 
-	// Get number of todos for this day
-	const num = todos.filter(
+	// Get totalnumber of todos for this day
+	const todosDueThisDay = todos.filter(
 		(todo) => todo.deadline.split('T')[0] === compareDate
-	).length;
+	);
 
-	return num;
+	// Get number of incomplete todos for this day
+	const incompleteTodosDueThisDay = todosDueThisDay.filter(
+		(todo) => !todo.completed
+	);
+
+	const totalNum = todosDueThisDay.length;
+	const incompleteNum = incompleteTodosDueThisDay.length;
+	return [totalNum, incompleteNum];
 }
 
 function itIsActive(momentObj, activeDayAsInt) {
@@ -130,7 +181,38 @@ function itIsActive(momentObj, activeDayAsInt) {
 	return activeDayFormatted === activeDayAsInt;
 }
 
-function itIsToday(todayObj, todayAsInt) {
-	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
-	return todayFormatted === todayAsInt;
+function itIsToday(todayObj, momentObj, todayAsInt) {
+	const todayFormattedDate = parseInt(todayObj.clone().format('D'), 10);
+	const todayFormattedMonth = parseInt(todayObj.clone().format('MM'), 10);
+	const todayFormattedYear = parseInt(todayObj.clone().format('YYYY'), 10);
+
+	const momentObjFormattedMonth = parseInt(momentObj.clone().format('MM'), 10);
+	const momentObjFormattedYear = parseInt(momentObj.clone().format('YYYY'), 10);
+
+	return (
+		todayFormattedDate === todayAsInt &&
+		todayFormattedMonth === momentObjFormattedMonth &&
+		todayFormattedYear === momentObjFormattedYear
+	);
+}
+
+function getDayObject(momentObj, dayAsInt) {
+	let yearNum;
+	let monthNum;
+	let datehNum;
+	if (dayAsInt > 0) {
+		yearNum = momentObj.clone().format('YYYY').toString();
+		monthNum = momentObj.clone().format('MM').toString();
+		datehNum = momentObj.clone().set('date', dayAsInt).format('DD').toString();
+	} else {
+		yearNum = momentObj.clone().format('YYYY').toString();
+		monthNum = momentObj.clone().format('MM').toString();
+		datehNum = momentObj.clone().format('DD').toString();
+	}
+
+	const dayInArray = JSON.parse(
+		localStorage.getItem(`year-${yearNum}-holidays`)
+	).find((day) => day.datum === `${yearNum}-${monthNum}-${datehNum}`);
+
+	return dayInArray;
 }

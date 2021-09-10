@@ -1,10 +1,24 @@
-function DayOfMonth({ day, placeHolder, today, active, cbFunc, numOfTodos }) {
+function DayOfMonth({
+	day,
+	placeHolder,
+	today,
+	active,
+	cbFunc,
+	numOfTodos,
+	dayValues,
+}) {
 	const generateNotches = () => {
-		let innerText = `This day has ${numOfTodos} todo${
-			numOfTodos > 1 ? 's' : ''
-		}`;
+		let innerText;
+		if (numOfTodos[0] > 0) {
+			if (numOfTodos[1] > 0) {
+				innerText = `${numOfTodos[1]} todo${numOfTodos[1] > 1 ? 's' : ''} due!`;
+			} else {
+				innerText = 'All todos done!';
+			}
+		}
 		return innerText;
 	};
+
 	return (
 		<>
 			{placeHolder ? (
@@ -13,11 +27,14 @@ function DayOfMonth({ day, placeHolder, today, active, cbFunc, numOfTodos }) {
 				<button
 					id={day + '|day of this month'}
 					className={`
-						${today ? 'today' : ''}
-						${active ? 'active-day' : ''}
-						${numOfTodos ? 'has-todos' : ''}
 						day-div
 						grid-child
+						${active ? 'active-day' : ''}
+						${numOfTodos[0] > 0 ? 'has-todos' : ''}
+						${numOfTodos[0] > 0 && numOfTodos[1] === 0 ? 'all-todos-done' : ''}
+						${today ? 'today' : ''}
+						${isHoliday(dayValues) ? 'is-holiday' : ''}
+						${isFlagDay(dayValues) ? 'is-flag-day' : ''}
 					`}
 					onClick={cbFunc}
 				>
@@ -34,3 +51,11 @@ function DayOfMonth({ day, placeHolder, today, active, cbFunc, numOfTodos }) {
 }
 
 export default DayOfMonth;
+
+function isHoliday(dayValues) {
+	return dayValues['röd dag'] === 'Ja' || dayValues['arbetsfri dag'] === 'Ja';
+}
+
+function isFlagDay(dayValues) {
+	return dayValues['flaggdag'] !== '';
+}
