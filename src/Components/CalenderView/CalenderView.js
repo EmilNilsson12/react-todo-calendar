@@ -160,12 +160,19 @@ export default CalenderView;
 function getNumOfTodosDueThisDay(momentObj, todos, i) {
 	const compareDate = momentObj.clone().set('date', i).format('YYYY-MM-DD');
 
-	// Get number of todos for this day
-	const num = todos.filter(
+	// Get totalnumber of todos for this day
+	const todosDueThisDay = todos.filter(
 		(todo) => todo.deadline.split('T')[0] === compareDate
-	).length;
+	);
 
-	return num;
+	// Get number of incomplete todos for this day
+	const incompleteTodosDueThisDay = todosDueThisDay.filter(
+		(todo) => !todo.completed
+	);
+
+	const totalNum = todosDueThisDay.length;
+	const incompleteNum = incompleteTodosDueThisDay.length;
+	return [totalNum, incompleteNum];
 }
 
 function itIsActive(momentObj, activeDayAsInt) {

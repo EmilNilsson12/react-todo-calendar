@@ -8,15 +8,18 @@ function DayOfMonth({
 	dayValues,
 }) {
 	const generateNotches = () => {
-		let innerText = `This day has ${numOfTodos} todo${
-			numOfTodos > 1 ? 's' : ''
-		}`;
+		console.log('numOfTodos: ', numOfTodos);
+		let innerText;
+		if (numOfTodos[0] > 0) {
+			if (numOfTodos[1] > 0) {
+				innerText = `${numOfTodos[1]} todo${numOfTodos[1] > 1 ? 's' : ''} due!`;
+			} else {
+				innerText = 'All todos done!';
+			}
+		}
 		return innerText;
 	};
 
-	if (!placeHolder) {
-		// console.table(dayValues.namnsdag);
-	}
 	return (
 		<>
 			{placeHolder ? (
@@ -27,7 +30,8 @@ function DayOfMonth({
 					className={`
 						${today ? 'today' : ''}
 						${active ? 'active-day' : ''}
-						${numOfTodos ? 'has-todos' : ''}
+						${numOfTodos[0] > 0 ? 'has-todos' : ''}
+						${numOfTodos[0] > 0 && numOfTodos[1] == 0 ? 'all-todos-done' : ''}
 						${isHoliday(dayValues) ? 'is-holiday' : ''}
 						${isFlagDay(dayValues) ? 'is-flag-day' : ''}
 						day-div
