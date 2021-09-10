@@ -15,6 +15,35 @@ function CalenderView({ todos, crudOperations }) {
 		today.toString().split(' ')[4]
 	);
 
+	const [currentYear, setCurrentYear] = useState(
+		momentObj.clone().format('YYYY')
+	);
+
+	useEffect(() => {
+		// Only update state if the calendar shows a new year
+		if (currentYear !== momentObj.clone().format('YYYY')) {
+			setCurrentYear(momentObj.clone().format('YYYY'));
+		}
+
+		// Make sure to only fetch from the API once a year
+		if (!localStorage.getItem(`year-${currentYear}`)) {
+			// Add the current year to LS to prevent multiple fetches for the same year
+			localStorage.setItem(`year-${currentYear}`, currentYear);
+
+			fetch(`http://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
+				.then((res) => {
+					return res.json();
+				})
+				.then((data) => {
+					// Add the fetched holidays to LS
+					localStorage.setItem(
+						`year-${currentYear}-holidays`,
+						JSON.stringify(data.dagar)
+					);
+				});
+		}
+	}, [currentYear, momentObj]);
+
 	useEffect(() => {
 		setCurrentTime(momentObj.toString().split(' ')[4]);
 	}, [momentObj]);
