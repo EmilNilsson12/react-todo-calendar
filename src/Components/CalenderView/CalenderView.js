@@ -110,8 +110,6 @@ function CalenderView({ todos, crudOperations }) {
 		}
 
 		for (let i = 1; i <= momentObj.daysInMonth(); i++) {
-			const dayObj = getDayObject(momentObj, i);
-
 			components.push(
 				<DayOfMonth
 					key={`Day ${i} of month`}
@@ -122,7 +120,7 @@ function CalenderView({ todos, crudOperations }) {
 					active={itIsActive(momentObj, i)}
 					cbFunc={dateClicked}
 					numOfTodos={getNumOfTodosDueThisDay(momentObj, todos, i)}
-					dayValues={dayObj}
+					dayValues={getDayObject(momentObj, i)}
 				/>
 			);
 		}
