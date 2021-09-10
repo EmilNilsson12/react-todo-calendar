@@ -210,9 +210,12 @@ function getDayObject(momentObj, dayAsInt) {
 		datehNum = momentObj.clone().format('DD').toString();
 	}
 
-	const dayInArray = JSON.parse(
-		localStorage.getItem(`year-${yearNum}-holidays`)
-	).find((day) => day.datum === `${yearNum}-${monthNum}-${datehNum}`);
+	let dayInArray;
+	if (localStorage.getItem(`year-${yearNum}-holidays`)) {
+		dayInArray = JSON.parse(
+			localStorage.getItem(`year-${yearNum}-holidays`)
+		).find((day) => day.datum === `${yearNum}-${monthNum}-${datehNum}`);
+	}
 
 	return dayInArray;
 }

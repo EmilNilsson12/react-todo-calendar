@@ -53,9 +53,17 @@ function DayOfMonth({
 export default DayOfMonth;
 
 function isHoliday(dayValues) {
-	return dayValues['röd dag'] === 'Ja' || dayValues['arbetsfri dag'] === 'Ja';
+	if (dayValues) {
+		return dayValues['röd dag'] === 'Ja' || dayValues['arbetsfri dag'] === 'Ja';
+	} else {
+		return false;
+	}
 }
 
 function isFlagDay(dayValues) {
-	return dayValues['flaggdag'] !== '';
+	if (dayValues) {
+		return dayValues['flaggdag'] !== '';
+	} else {
+		return false;
+	}
 }
