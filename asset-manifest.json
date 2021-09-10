@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/react-todo-calendar/static/css/main.adfaf870.chunk.css",
-    "main.js": "/react-todo-calendar/static/js/main.a89b14f4.chunk.js",
-    "main.js.map": "/react-todo-calendar/static/js/main.a89b14f4.chunk.js.map",
+    "main.css": "/react-todo-calendar/static/css/main.53525d2f.chunk.css",
+    "main.js": "/react-todo-calendar/static/js/main.eb6c5172.chunk.js",
+    "main.js.map": "/react-todo-calendar/static/js/main.eb6c5172.chunk.js.map",
     "runtime-main.js": "/react-todo-calendar/static/js/runtime-main.c1f97560.js",
     "runtime-main.js.map": "/react-todo-calendar/static/js/runtime-main.c1f97560.js.map",
-    "static/js/2.dc891829.chunk.js": "/react-todo-calendar/static/js/2.dc891829.chunk.js",
-    "static/js/2.dc891829.chunk.js.map": "/react-todo-calendar/static/js/2.dc891829.chunk.js.map",
+    "static/js/2.51536f90.chunk.js": "/react-todo-calendar/static/js/2.51536f90.chunk.js",
+    "static/js/2.51536f90.chunk.js.map": "/react-todo-calendar/static/js/2.51536f90.chunk.js.map",
     "index.html": "/react-todo-calendar/index.html",
-    "static/css/main.adfaf870.chunk.css.map": "/react-todo-calendar/static/css/main.adfaf870.chunk.css.map",
-    "static/js/2.dc891829.chunk.js.LICENSE.txt": "/react-todo-calendar/static/js/2.dc891829.chunk.js.LICENSE.txt"
+    "static/css/main.53525d2f.chunk.css.map": "/react-todo-calendar/static/css/main.53525d2f.chunk.css.map",
+    "static/js/2.51536f90.chunk.js.LICENSE.txt": "/react-todo-calendar/static/js/2.51536f90.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c1f97560.js",
-    "static/js/2.dc891829.chunk.js",
-    "static/css/main.adfaf870.chunk.css",
-    "static/js/main.a89b14f4.chunk.js"
+    "static/js/2.51536f90.chunk.js",
+    "static/css/main.53525d2f.chunk.css",
+    "static/js/main.eb6c5172.chunk.js"
   ]
 }
