@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import './DayWithTodos.css';
 
 import TodoForm from '../TodoForm/TodoForm';
