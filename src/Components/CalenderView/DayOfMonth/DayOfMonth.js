@@ -28,14 +28,14 @@ function DayOfMonth({
 				<button
 					id={day + '|day of this month'}
 					className={`
-						${today ? 'today' : ''}
+						day-div
+						grid-child
 						${active ? 'active-day' : ''}
 						${numOfTodos[0] > 0 ? 'has-todos' : ''}
 						${numOfTodos[0] > 0 && numOfTodos[1] == 0 ? 'all-todos-done' : ''}
+						${today ? 'today' : ''}
 						${isHoliday(dayValues) ? 'is-holiday' : ''}
 						${isFlagDay(dayValues) ? 'is-flag-day' : ''}
-						day-div
-						grid-child
 					`}
 					onClick={cbFunc}
 				>
