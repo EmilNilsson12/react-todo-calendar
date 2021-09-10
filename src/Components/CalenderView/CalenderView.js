@@ -147,6 +147,7 @@ function CalenderView({ todos, crudOperations }) {
 					dayToShow={momentObj}
 					todos={todos}
 					crudOperations={crudOperations}
+					dayValues={getDayObject(momentObj, 0)}
 				/>
 			) : (
 				<p>Loading...</p>
@@ -196,13 +197,18 @@ function itIsToday(todayObj, momentObj, todayAsInt) {
 }
 
 function getDayObject(momentObj, dayAsInt) {
-	const yearNum = momentObj.clone().format('YYYY').toString();
-	const monthNum = momentObj.clone().format('MM').toString();
-	const datehNum = momentObj
-		.clone()
-		.set('date', dayAsInt)
-		.format('DD')
-		.toString();
+	let yearNum;
+	let monthNum;
+	let datehNum;
+	if (dayAsInt > 0) {
+		yearNum = momentObj.clone().format('YYYY').toString();
+		monthNum = momentObj.clone().format('MM').toString();
+		datehNum = momentObj.clone().set('date', dayAsInt).format('DD').toString();
+	} else {
+		yearNum = momentObj.clone().format('YYYY').toString();
+		monthNum = momentObj.clone().format('MM').toString();
+		datehNum = momentObj.clone().format('DD').toString();
+	}
 
 	const dayInArray = JSON.parse(
 		localStorage.getItem(`year-${yearNum}-holidays`)
