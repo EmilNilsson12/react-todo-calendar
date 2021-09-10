@@ -12,7 +12,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 		<div className='day-with-todos'>
 			<p>{dayToShow.format('D [of] MMMM, YYYY')}</p>
 
-			{dayValues.namnsdag.length ? (
+			{dayValues['namnsdag'].length ? (
 				<p>
 					Idag har <u>{dayValues.namnsdag.join(' och ')}</u> namnsdag!
 				</p>
