@@ -33,7 +33,7 @@ function CalenderView({ todos, crudOperations }) {
 				// Add the current year to LS to prevent multiple fetches for the same year
 				localStorage.setItem(`year-${currentYear}`, currentYear);
 
-				await fetch(`http://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
+				await fetch(`https://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
 					.then((res) => {
 						return res.json();
 					})
