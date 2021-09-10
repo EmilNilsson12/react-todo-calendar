@@ -19,7 +19,9 @@ function CalenderView({ todos, crudOperations }) {
 		momentObj.clone().format('YYYY')
 	);
 
-	useEffect(() => {
+	const [loadingState, setLoadingState] = useState(true);
+
+	useEffect(async () => {
 		// Only update state if the calendar shows a new year
 		if (currentYear !== momentObj.clone().format('YYYY')) {
 			setCurrentYear(momentObj.clone().format('YYYY'));
@@ -30,17 +32,20 @@ function CalenderView({ todos, crudOperations }) {
 			// Add the current year to LS to prevent multiple fetches for the same year
 			localStorage.setItem(`year-${currentYear}`, currentYear);
 
-			fetch(`http://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
+			await fetch(`http://sholiday.faboul.se/dagar/v2.1/${currentYear}`)
 				.then((res) => {
 					return res.json();
 				})
-				.then((data) => {
+				.then(async (data) => {
 					// Add the fetched holidays to LS
-					localStorage.setItem(
+					await localStorage.setItem(
 						`year-${currentYear}-holidays`,
 						JSON.stringify(data.dagar)
 					);
+					setLoadingState(false);
 				});
+		} else {
+			setLoadingState(false);
 		}
 	}, [currentYear, momentObj]);
 
@@ -108,11 +113,11 @@ function CalenderView({ todos, crudOperations }) {
 					placeHolder={false}
 					day={i}
 					// Today is only true when it's today
-					today={itIsToday(today, i)}
+					today={itIsToday(today, momentObj, i)}
 					active={itIsActive(momentObj, i)}
 					cbFunc={dateClicked}
 					numOfTodos={getNumOfTodosDueThisDay(momentObj, todos, i)}
-					redDay={isAHoliday(momentObj, i)}
+					holiday={isAHoliday(momentObj, i)}
 				/>
 			);
 		}
@@ -133,11 +138,16 @@ function CalenderView({ todos, crudOperations }) {
 				<WeekDays />
 				<div className='grid-container calender-days'>{renderDays()}</div>
 			</div>
-			<DayWithTodos
-				dayToShow={momentObj}
-				todos={todos}
-				crudOperations={crudOperations}
-			/>
+
+			{loadingState === false ? (
+				<DayWithTodos
+					dayToShow={momentObj}
+					todos={todos}
+					crudOperations={crudOperations}
+				/>
+			) : (
+				<p>Loading...</p>
+			)}
 		</div>
 	);
 }
@@ -160,24 +170,38 @@ function itIsActive(momentObj, activeDayAsInt) {
 	return activeDayFormatted === activeDayAsInt;
 }
 
-function itIsToday(todayObj, todayAsInt) {
-	const todayFormatted = parseInt(todayObj.clone().format('D'), 10);
-	return todayFormatted === todayAsInt;
+function itIsToday(todayObj, momentObj, todayAsInt) {
+	const todayFormattedDate = parseInt(todayObj.clone().format('D'), 10);
+	const todayFormattedMonth = parseInt(todayObj.clone().format('MM'), 10);
+	const todayFormattedYear = parseInt(todayObj.clone().format('YYYY'), 10);
+
+	const momentObjFormattedMonth = parseInt(momentObj.clone().format('MM'), 10);
+	const momentObjFormattedYear = parseInt(momentObj.clone().format('YYYY'), 10);
+
+	return (
+		todayFormattedDate === todayAsInt &&
+		todayFormattedMonth === momentObjFormattedMonth &&
+		todayFormattedYear === momentObjFormattedYear
+	);
 }
 
 function isAHoliday(momentObj, dayAsInt) {
 	const yearNum = momentObj.format('YYYY').toString();
 	const monthNum = momentObj.format('MM').toString();
 
-	// Find object in array for current year
-	const dayInArray = JSON.parse(
-		localStorage.getItem(`year-${yearNum}-holidays`)
-	).find((day) => day.datum === `${yearNum}-${monthNum}-${dayAsInt}`);
+	if (localStorage.getItem(`year-${yearNum}-holidays`)) {
+		// Find object in array for current year
+		const dayInArray = JSON.parse(
+			localStorage.getItem(`year-${yearNum}-holidays`)
+		).find((day) => day.datum === `${yearNum}-${monthNum}-${dayAsInt}`);
 
-	// Ignore undefined days
-	if (dayInArray) {
-		const isHoliday = dayInArray['röd dag'];
-		return isHoliday ? true : false;
+		// Ignore undefined days
+		if (dayInArray) {
+			const isHoliday = dayInArray['röd dag'] === 'Ja';
+			return isHoliday ? true : false;
+		} else {
+			return false;
+		}
 	} else {
 		return false;
 	}

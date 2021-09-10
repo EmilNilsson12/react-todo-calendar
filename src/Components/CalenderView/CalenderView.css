@@ -56,8 +56,12 @@
 	user-select: none;
 }
 
-.has-todos {
+.is-holiday {
 	background-color: rgba(255, 0, 0, 0.3);
+}
+
+.has-todos {
+	background-color: rgba(0, 255, 0, 0.3);
 }
 
 .notch-container {
@@ -73,6 +77,7 @@
 	bottom: 5%;
 	right: 10%;
 }
+
 .has-todos .date-num {
 	color: black;
 }
