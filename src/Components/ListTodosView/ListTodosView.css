@@ -22,3 +22,8 @@
 	display: grid;
 	grid-template-columns: 1fr 4fr;
 }
+
+.todos-date-header {
+	text-align: center;
+	font-size: 40px;
+}
