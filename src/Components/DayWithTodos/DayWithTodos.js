@@ -14,7 +14,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 
 			{dayValues?.namnsdag.length ? (
 				<p>
-					Idag har <u>{dayValues.namnsdag.join(' och ')}</u> namnsdag!
+					Idag har <u>{dayValues?.namnsdag.join(' och ')}</u> namnsdag!
 				</p>
 			) : (
 				<></>
