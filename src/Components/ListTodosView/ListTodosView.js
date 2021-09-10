@@ -23,8 +23,15 @@ function ListTodosView({
 		setUpdateParams(todoObj);
 	};
 
+	let sortedAndByDueDate = [...todos.sort(compareByDates)];
+	if (showIncompleteOnly) {
+		sortedAndByDueDate = [
+			...sortedAndByDueDate.filter((todo) => !todo.completed),
+		];
+	}
+
 	const setOfTodoDates = new Set();
-	for (const todo of todos) {
+	for (const todo of sortedAndByDueDate) {
 		setOfTodoDates.add(todo.deadline.split('T')[0]);
 	}
 	const setOfTodoDatesArr = Array.from(setOfTodoDates);
@@ -32,24 +39,14 @@ function ListTodosView({
 	const filteredTodosByDate = [];
 	for (const date of setOfTodoDatesArr) {
 		filteredTodosByDate.push(
-			todos.filter((todo) => todo.deadline.split('T')[0] === date)
+			sortedAndByDueDate.filter((todo) => todo.deadline.split('T')[0] === date)
 		);
 	}
-	console.log('Before sorted');
-	console.log(filteredTodosByDate);
-	let sortedAndFilteredByDueDate = filteredTodosByDate.sort(compareByDates);
-	if (showIncompleteOnly) {
-		sortedAndFilteredByDueDate = [
-			...sortedAndFilteredByDueDate.filter((todo) => !todo.completed),
-		];
-	}
-	console.log('After sorted');
-	console.log(sortedAndFilteredByDueDate);
 
 	const mapReturnArray = () => {
 		const returnArr = [];
 
-		for (const dateWithTodos of sortedAndFilteredByDueDate) {
+		for (const dateWithTodos of filteredTodosByDate) {
 			returnArr.push(
 				<div key={dateWithTodos[0].deadline.split('T')[0]}>
 					{!insideDayWithTodos ? (
@@ -131,7 +128,17 @@ function ListTodosView({
 			${insideDayWithTodos ? 'inside-day-with-todos' : ''}
 			`}
 				>
-					{mapReturnArray()}
+					{insideDayWithTodos
+						? filteredTodosByDate[0]?.map((todo) => (
+								<TodoView
+									key={todo.id}
+									todoObj={todo}
+									toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+									deleteTodo={crudOperations.deleteTodo}
+									beginEdit={handleTodoUpdate}
+								/>
+						  ))
+						: mapReturnArray()}
 				</div>
 			</div>
 		</div>
@@ -141,8 +148,8 @@ function ListTodosView({
 export default ListTodosView;
 
 function compareByDates(a, b) {
-	const aDate = moment(a[0].deadline);
-	const bDate = moment(b[0].deadline);
+	const aDate = moment(a.deadline);
+	const bDate = moment(b.deadline);
 
 	let returnValue;
 	aDate.isBefore(bDate)
