@@ -10,13 +10,13 @@ function ListTodosView({
 	todos,
 	crudOperations,
 	insideDayWithTodos,
-	showingText,
 	dayToShow,
+	hiddenByDefault,
 }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
-	const [showIncompleteOnly, toggleShowIncompleteOnly] = useState(false);
+	const [hideCompleted, toggleHideCompleted] = useState(hiddenByDefault);
 
 	const handleTodoUpdate = (todoObj) => {
 		setCurrentlyUpdating(true);
@@ -24,7 +24,7 @@ function ListTodosView({
 	};
 
 	let sortedAndByDueDate = [...todos.sort(compareByDates)];
-	if (showIncompleteOnly) {
+	if (hideCompleted) {
 		sortedAndByDueDate = [
 			...sortedAndByDueDate.filter((todo) => !todo.completed),
 		];
@@ -85,10 +85,10 @@ function ListTodosView({
 	) : (
 		<div
 			className={`
-			${showingText ? 'day-w-todos-grid' : ''}
+			${insideDayWithTodos ? 'day-w-todos-grid' : ''}
 		`}
 		>
-			{showingText ? (
+			{insideDayWithTodos ? (
 				<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 			) : (
 				<></>
@@ -102,24 +102,11 @@ function ListTodosView({
 				}`}
 			>
 				<label>
-					{showIncompleteOnly
-						? `${
-								showingText
-									? `Showing only incomplete todos due on ${showingText}`
-									: 'Showing: All'
-						  }`
-						: `${
-								showingText
-									? `Showing all todos due on: ${showingText}`
-									: 'Showing: Only incomplete'
-						  }`}
-					<br />
-					{showIncompleteOnly
-						? 'Click to show all'
-						: 'Click to show only incomplete'}
+					Hide completed
 					<input
 						type='checkbox'
-						onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
+						checked={hideCompleted}
+						onClick={() => toggleHideCompleted(!hideCompleted)}
 					/>
 				</label>
 				<div

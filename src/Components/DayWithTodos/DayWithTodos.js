@@ -26,8 +26,8 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 						todos={todosForThisDay}
 						crudOperations={crudOperations}
 						insideDayWithTodos={true}
-						showingText={dayToShow.format('D [of] MMMM, YYYY')}
 						dayToShow={dayToShow}
+						hiddenByDefault={true}
 					/>
 				) : (
 					<div className='day-w-out-todos'>
