@@ -21,7 +21,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 			)}
 			{dayValues?.flaggdag !== '' ? (
 				<p>
-					Hissa flaggan för idag är det: <u>{dayValues['flaggdag']}</u>
+					Hissa flaggan för idag är det: <u>{dayValues?.flaggdag}</u>
 				</p>
 			) : (
 				<></>
