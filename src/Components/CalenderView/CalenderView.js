@@ -186,22 +186,23 @@ function itIsToday(todayObj, momentObj, todayAsInt) {
 }
 
 function isAHoliday(momentObj, dayAsInt) {
-	const yearNum = momentObj.format('YYYY').toString();
-	const monthNum = momentObj.format('MM').toString();
+	const yearNum = momentObj.clone().format('YYYY').toString();
+	const monthNum = momentObj.clone().format('MM').toString();
+	const datehNum = momentObj
+		.clone()
+		.set('date', dayAsInt)
+		.format('DD')
+		.toString();
 
 	if (localStorage.getItem(`year-${yearNum}-holidays`)) {
 		// Find object in array for current year
 		const dayInArray = JSON.parse(
 			localStorage.getItem(`year-${yearNum}-holidays`)
-		).find((day) => day.datum === `${yearNum}-${monthNum}-${dayAsInt}`);
+		).find((day) => day.datum === `${yearNum}-${monthNum}-${datehNum}`);
 
-		// Ignore undefined days
-		if (dayInArray) {
-			const isHoliday = dayInArray['röd dag'] === 'Ja';
-			return isHoliday ? true : false;
-		} else {
-			return false;
-		}
+		const isHoliday =
+			dayInArray['röd dag'] === 'Ja' || dayInArray['arbetsfri dag'] === 'Ja';
+		return isHoliday ? true : false;
 	} else {
 		return false;
 	}

@@ -14,8 +14,10 @@ function DayOfMonth({
 		return innerText;
 	};
 
-	console.log(day);
-	console.log(holiday);
+	if (!placeHolder) {
+		console.log(day);
+		console.log(holiday);
+	}
 	return (
 		<>
 			{placeHolder ? (
