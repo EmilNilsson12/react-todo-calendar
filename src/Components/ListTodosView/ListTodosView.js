@@ -11,12 +11,12 @@ function ListTodosView({
 	crudOperations,
 	insideDayWithTodos,
 	dayToShow,
-	hiddenByDefault,
+	hiddenByDefault: hideDoneTodosByDefault,
 }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
-	const [hideCompleted, toggleHideCompleted] = useState(hiddenByDefault);
+	const [hideCompleted, toggleHideCompleted] = useState(hideDoneTodosByDefault);
 
 	const handleTodoUpdate = (todoObj) => {
 		setCurrentlyUpdating(true);

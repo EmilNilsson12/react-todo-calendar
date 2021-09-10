@@ -58,7 +58,7 @@ function App() {
 			<ListTodosView
 				todos={todos}
 				crudOperations={crudOperations}
-				hiddenByDefault={false}
+				hideDoneTodosByDefault={false}
 			/>
 			<CalenderView todos={todos} crudOperations={crudOperations} />
 		</div>

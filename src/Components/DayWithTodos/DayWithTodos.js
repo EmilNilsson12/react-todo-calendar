@@ -33,7 +33,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations, dayValues }) {
 						crudOperations={crudOperations}
 						insideDayWithTodos={true}
 						dayToShow={dayToShow}
-						hiddenByDefault={true}
+						hideDoneTodosByDefault={true}
 					/>
 				) : (
 					<div className='day-w-out-todos'>
