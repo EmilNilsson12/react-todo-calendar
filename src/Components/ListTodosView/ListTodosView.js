@@ -38,7 +38,7 @@ function ListTodosView({
 	) : (
 		<div
 			className={`
-			${showingText ? 'testing-grid' : ''}
+			${showingText ? 'day-w-todos-grid' : ''}
 		`}
 		>
 			{showingText ? (
