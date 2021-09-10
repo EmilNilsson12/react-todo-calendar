@@ -10,17 +10,7 @@ function DayWithTodos({ dayToShow, todos, crudOperations }) {
 		dayToShow.isSame(todo.deadline, 'date')
 	);
 
-	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
-
-	return currentlyUpdating ? (
-		<TodoForm
-			addTodo={crudOperations.addTodo}
-			updateTodo={crudOperations.updateTodo}
-			updateMode={true}
-			setCurrentlyUpdating={setCurrentlyUpdating}
-			dayToShow={dayToShow}
-		/>
-	) : (
+	return (
 		<div className='day-with-todos'>
 			<div className='grid-day-with-todos'>
 				{todosForThisDay.length > 0 ? (
