@@ -10,22 +10,69 @@ function ListTodosView({
 	todos,
 	crudOperations,
 	insideDayWithTodos,
-	showingText,
 	dayToShow,
+	hiddenByDefault: hideDoneTodosByDefault,
 }) {
 	const [currentlyUpdating, setCurrentlyUpdating] = useState(false);
 	const [updateParams, setUpdateParams] = useState({});
 
-	const [showIncompleteOnly, toggleShowIncompleteOnly] = useState(false);
+	const [hideCompleted, toggleHideCompleted] = useState(hideDoneTodosByDefault);
 
 	const handleTodoUpdate = (todoObj) => {
 		setCurrentlyUpdating(true);
 		setUpdateParams(todoObj);
 	};
 
-	let sortedByDueDate = [...todos.sort(compareByDates)];
-	if (showIncompleteOnly)
-		sortedByDueDate = [...sortedByDueDate.filter((todo) => !todo.completed)];
+	let sortedAndByDueDate = [...todos.sort(compareByDates)];
+	if (hideCompleted) {
+		sortedAndByDueDate = [
+			...sortedAndByDueDate.filter((todo) => !todo.completed),
+		];
+	}
+
+	const setOfTodoDates = new Set();
+	for (const todo of sortedAndByDueDate) {
+		setOfTodoDates.add(todo.deadline.split('T')[0]);
+	}
+	const setOfTodoDatesArr = Array.from(setOfTodoDates);
+
+	const filteredTodosByDate = [];
+	for (const date of setOfTodoDatesArr) {
+		filteredTodosByDate.push(
+			sortedAndByDueDate.filter((todo) => todo.deadline.split('T')[0] === date)
+		);
+	}
+
+	const mapReturnArray = () => {
+		const returnArr = [];
+
+		for (const dateWithTodos of filteredTodosByDate) {
+			returnArr.push(
+				<div key={dateWithTodos[0].deadline.split('T')[0]}>
+					{!insideDayWithTodos ? (
+						<h2 className='todos-date-header'>
+							{dateWithTodos[0].deadline.split('T')[0]}
+						</h2>
+					) : (
+						<></>
+					)}
+
+					{dateWithTodos.map((todo) => (
+						<TodoView
+							key={todo.id}
+							todoObj={todo}
+							toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+							deleteTodo={crudOperations.deleteTodo}
+							beginEdit={handleTodoUpdate}
+						/>
+					))}
+				</div>
+			);
+		}
+
+		return returnArr;
+	};
+
 	return currentlyUpdating ? (
 		<TodoForm
 			addTodo={crudOperations.addTodo}
@@ -38,10 +85,10 @@ function ListTodosView({
 	) : (
 		<div
 			className={`
-			${showingText ? 'testing-grid' : ''}
+			${insideDayWithTodos ? 'day-w-todos-grid' : ''}
 		`}
 		>
-			{showingText ? (
+			{insideDayWithTodos ? (
 				<TodoForm addTodo={crudOperations.addTodo} dayToShow={dayToShow} />
 			) : (
 				<></>
@@ -55,24 +102,11 @@ function ListTodosView({
 				}`}
 			>
 				<label>
-					{showIncompleteOnly
-						? `${
-								showingText
-									? `Showing only incomplete todos due on ${showingText}`
-									: 'Showing: All'
-						  }`
-						: `${
-								showingText
-									? `Showing all todos due on: ${showingText}`
-									: 'Showing: Only incomplete'
-						  }`}
-					<br />
-					{showIncompleteOnly
-						? 'Click to show all'
-						: 'Click to show only incomplete'}
+					Hide completed
 					<input
 						type='checkbox'
-						onClick={() => toggleShowIncompleteOnly(!showIncompleteOnly)}
+						checked={hideCompleted}
+						onClick={() => toggleHideCompleted(!hideCompleted)}
 					/>
 				</label>
 				<div
@@ -81,19 +115,17 @@ function ListTodosView({
 			${insideDayWithTodos ? 'inside-day-with-todos' : ''}
 			`}
 				>
-					{sortedByDueDate.map((todo) => {
-						const momentObjFromTodo = moment(todo.deadline);
-						return (
-							<TodoView
-								key={todo.id}
-								todoObj={todo}
-								toggleCompleteTodo={crudOperations.toggleCompleteTodo}
-								deleteTodo={crudOperations.deleteTodo}
-								momentObjFromTodo={momentObjFromTodo}
-								beginEdit={handleTodoUpdate}
-							/>
-						);
-					})}
+					{insideDayWithTodos
+						? filteredTodosByDate[0]?.map((todo) => (
+								<TodoView
+									key={todo.id}
+									todoObj={todo}
+									toggleCompleteTodo={crudOperations.toggleCompleteTodo}
+									deleteTodo={crudOperations.deleteTodo}
+									beginEdit={handleTodoUpdate}
+								/>
+						  ))
+						: mapReturnArray()}
 				</div>
 			</div>
 		</div>

@@ -2,3 +2,12 @@
 	display: grid;
 	grid-template-columns: 1fr 4fr;
 }
+
+.grid-day-with-todos form {
+	margin-top: 100px;
+}
+
+.grid-day-with-todos i {
+	display: block;
+	margin-top: 50px;
+}

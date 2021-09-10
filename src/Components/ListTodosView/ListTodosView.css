@@ -18,7 +18,12 @@
 	height: 50vh;
 }
 
-.testing-grid {
+.day-w-todos-grid {
 	display: grid;
 	grid-template-columns: 1fr 4fr;
+}
+
+.todos-date-header {
+	text-align: center;
+	font-size: 40px;
 }

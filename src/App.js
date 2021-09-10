@@ -55,7 +55,11 @@ function App() {
 
 	return (
 		<div className='App'>
-			<ListTodosView todos={todos} crudOperations={crudOperations} />
+			<ListTodosView
+				todos={todos}
+				crudOperations={crudOperations}
+				hideDoneTodosByDefault={false}
+			/>
 			<CalenderView todos={todos} crudOperations={crudOperations} />
 		</div>
 	);
